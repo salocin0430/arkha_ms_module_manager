@@ -49,7 +49,6 @@ def calcular_modulos_arka(P, T, TipoC):
     # Usamos f-string para formatear los números de 1 a 27 como '001', '002', etc.
     modulos_necesarios = {f"{i:03d}": 0 for i in range(1, 28)}
 
-    P_Total = P
     # --- REGLAS DE CÁLCULO ---
 
     # 1. Módulo BASE (001)
@@ -60,31 +59,31 @@ def calcular_modulos_arka(P, T, TipoC):
     # 2. Módulos LABORATORY (002 (tri) y 003)
     # La lógica sigue la tabla de reglas para P y T.
     if TipoC:
-        Times_P = math.floor(P / 16)
+        Bloques_L = P // 16
+        Resto_L = P % 16
         if T <= 500:
-            modulos_necesarios["003"] += 4 * Times_P
+            modulos_necesarios["003"] += 4 * Bloques_L
         elif 500 < T < 1000:
-            modulos_necesarios["002"] += 1 * Times_P
-            modulos_necesarios["003"] += 3 * Times_P
+            modulos_necesarios["002"] += 1 * Bloques_L
+            modulos_necesarios["003"] += 3 * Bloques_L
         else:  # T >= 1000
-            modulos_necesarios["002"] += 4 * Times_P       
+            modulos_necesarios["002"] += 4 * Bloques_L       
         
-        P = P_Total % 16
-        if 1 <= P <= 4:
+        if 1 <= Resto_L <= 4:
             if T <= 500:
                 modulos_necesarios["003"] += 1
             elif 500 < T < 1000:
                 modulos_necesarios["002"] += 1
             else:  # T >= 1000
                 modulos_necesarios["003"] += 2
-        elif 5 <= P <= 8:
+        elif 5 <= Resto_L <= 8:
             if T <= 500:
                 modulos_necesarios["003"] += 2
             elif 500 < T < 1000:
                 modulos_necesarios["002"] += 2
             else:  # T >= 1000
                 modulos_necesarios["003"] += 3
-        elif 9 <= P <= 12:
+        elif 9 <= Resto_L <= 12:
             if T <= 500:
                 modulos_necesarios["003"] += 3
             elif 500 < T < 1000:
@@ -92,7 +91,7 @@ def calcular_modulos_arka(P, T, TipoC):
                 modulos_necesarios["003"] += 2
             else:  # T >= 1000
                 modulos_necesarios["003"] += 4
-        elif 13 <= P <= 16:
+        elif 13 <= Resto_L <= 16:
             if T <= 500:
                 modulos_necesarios["003"] += 4
             elif 500 < T < 1000:
@@ -108,8 +107,8 @@ def calcular_modulos_arka(P, T, TipoC):
 
     # 4. Módulos RECREATION (005 (tri) y 006)
     # La lógica sigue la tabla de reglas para P y T.
-    Bloques_R = P_Total // 12
-    Resto_R = P_Total % 12
+    Bloques_R = P // 12
+    Resto_R = P % 12
 
     if T <= 180:
         modulos_necesarios["006"] += 1 * Bloques_R
@@ -165,8 +164,8 @@ def calcular_modulos_arka(P, T, TipoC):
     
     # 9. Módulos SANITARY (012 y 013(tri))
     
-    Bloques_S = P_Total // 6
-    Resto_S = P_Total % 6
+    Bloques_S = P // 6
+    Resto_S = P % 6
     
     if T < 500:
         modulos_necesarios["012"] += 1 * Bloques_S
@@ -187,8 +186,8 @@ def calcular_modulos_arka(P, T, TipoC):
             modulos_necesarios["013"] += 1
 
     # 11. Módulos EXERCISE (014 y 015)
-    Bloques_E = P_Total // 12
-    Resto_E = P_Total % 12
+    Bloques_E = P // 12
+    Resto_E = P % 12
     if T <= 30:
         modulos_necesarios["014"] += 2 * Bloques_E
     elif 30 < T < 500:
@@ -212,8 +211,8 @@ def calcular_modulos_arka(P, T, TipoC):
             modulos_necesarios["015"] += 2
 
     # 12. Módulos SYSTEM (016 y 017)
-    Bloques_SYS = P_Total // 12
-    Resto_SYS = P_Total % 12
+    Bloques_SYS = P // 12
+    Resto_SYS = P % 12
     if T <= 180:
         modulos_necesarios["017"] += 2 * Bloques_SYS
     elif 180 < T < 500:
@@ -258,20 +257,22 @@ def calcular_modulos_arka(P, T, TipoC):
 
     # 11. Módulos STORAGE (018 y 019)
     # Basado en el producto de P * T
-    pt_product = P * T
     
-    modulos_necesarios["018"] = math.floor(pt_product/11.9)
+    T_storage = min(T, 365)
+    pt_product = 0.012 * P * T_storage
+    
+    modulos_necesarios["019"] = math.floor(pt_product/11.9)
     if pt_product % 11.9 > 8.1:
-        modulos_necesarios["018"] += 1
+        modulos_necesarios["019"] += 1
     elif pt_product % 11.9 != 0:
-        modulos_necesarios["019"] = 1
+        modulos_necesarios["018"] = 1
 
     
 
 
     # 12. Módulos COMPUTER (020 y 021) - REGLAS ACTUALIZADAS
-    Bloques_C = P_Total // 16
-    Resto_C = P_Total % 16
+    Bloques_C = P // 16
+    Resto_C = P % 16
     if T <= 180:
         modulos_necesarios["020"] += 2 * Bloques_C
     else:
@@ -295,8 +296,8 @@ def calcular_modulos_arka(P, T, TipoC):
         modulos_necesarios["022"] = math.ceil(P / 8) + 1
 
     # 14. Módulos MEDICAL (024 y 025)
-    Bloques_M = P_Total // 12
-    Resto_M = P_Total % 12
+    Bloques_M = P // 12
+    Resto_M = P % 12
     if T <= 180:
         modulos_necesarios["025"] += 2 * Bloques_M
     else:
@@ -320,8 +321,8 @@ def calcular_modulos_arka(P, T, TipoC):
         else: modulos_necesarios["024"] += 2
             
     # 15. Módulos SLEEP (026 y 027)
-    Bloques_SLP = P_Total // 4
-    Resto_SLP = P_Total % 4
+    Bloques_SLP = P // 4
+    Resto_SLP = P % 4
     modulos_necesarios["027"] += Bloques_SLP
     if Resto_SLP in (1,2):
         modulos_necesarios["026"] += 1
@@ -333,14 +334,14 @@ def calcular_modulos_arka(P, T, TipoC):
 # --- EJEMPLO DE USO ---
 if __name__ == "__main__":
     # --- PARÁMETROS DE ENTRADA DE LA MISIÓN ---
-    numero_de_pasajeros = 14
-    tiempo_en_dias = 200
+    numero_de_pasajeros = 30
+    tiempo_en_dias = 500
     # -------------------------------------------
 
     print(f"Calculando módulos para una misión con {numero_de_pasajeros} pasajeros y {tiempo_en_dias} días de duración...\n")
 
     # Ejecutar el algoritmo
-    resultado = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias)
+    resultado = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias, TipoC=True)
 
     # Imprimir los resultados de forma clara
     print("--- INVENTARIO DE MÓDULOS NECESARIOS PARA EL ARKA ---")
