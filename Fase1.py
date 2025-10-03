@@ -33,13 +33,14 @@ MODULOS_INFO = {
 }
 
 # --- Algoritmo Principal ---
-def calcular_modulos_arka(P, T):
+def calcular_modulos_arka(P, T, TipoC):
     """
     Calcula la cantidad de cada tipo de módulo necesario para el Arka.
 
     Args:
         P (int): Número de pasajeros.
         T (int): Tiempo de la misión en días.
+        TipoC (bool): Indica si se está realizando una misión de tipo Científico.
 
     Returns:
         dict: Un diccionario con el código del módulo como clave y la cantidad necesaria como valor.
@@ -57,36 +58,37 @@ def calcular_modulos_arka(P, T):
     
     # 2. Módulos LABORATORY (002 (tri) y 003)
     # La lógica sigue la tabla de reglas para P y T.
-    if 1 <= P <= 4:
-        if T <= 500:
-            modulos_necesarios["003"] += 1
-        elif 500 < T < 1000:
-            modulos_necesarios["002"] += 1
-        else:  # T >= 1000
-            modulos_necesarios["003"] += 2
-    elif 5 <= P <= 8:
-        if T <= 500:
-            modulos_necesarios["003"] += 2
-        elif 500 < T < 1000:
-            modulos_necesarios["002"] += 2
-        else:  # T >= 1000
-            modulos_necesarios["003"] += 3
-    elif 9 <= P <= 12:
-        if T <= 500:
-            modulos_necesarios["003"] += 3
-        elif 500 < T < 1000:
-            modulos_necesarios["002"] += 1
-            modulos_necesarios["003"] += 2
-        else:  # T >= 1000
-            modulos_necesarios["003"] += 4
-    elif 13 <= P <= 16:
-        if T <= 500:
-            modulos_necesarios["003"] += 4
-        elif 500 < T < 1000:
-            modulos_necesarios["002"] += 1
-            modulos_necesarios["003"] += 3
-        else:  # T >= 1000
-            modulos_necesarios["002"] += 4
+    if TipoC:
+        if 1 <= P <= 4:
+            if T <= 500:
+                modulos_necesarios["003"] += 1
+            elif 500 < T < 1000:
+                modulos_necesarios["002"] += 1
+            else:  # T >= 1000
+                modulos_necesarios["003"] += 2
+        elif 5 <= P <= 8:
+            if T <= 500:
+                modulos_necesarios["003"] += 2
+            elif 500 < T < 1000:
+                modulos_necesarios["002"] += 2
+            else:  # T >= 1000
+                modulos_necesarios["003"] += 3
+        elif 9 <= P <= 12:
+            if T <= 500:
+                modulos_necesarios["003"] += 3
+            elif 500 < T < 1000:
+                modulos_necesarios["002"] += 1
+                modulos_necesarios["003"] += 2
+            else:  # T >= 1000
+                modulos_necesarios["003"] += 4
+        elif 13 <= P <= 16:
+            if T <= 500:
+                modulos_necesarios["003"] += 4
+            elif 500 < T < 1000:
+                modulos_necesarios["002"] += 1
+                modulos_necesarios["003"] += 3
+            else:  # T >= 1000
+                modulos_necesarios["002"] += 4
 
 
     # 3. Módulo POWERCORE (004)
@@ -227,6 +229,12 @@ def calcular_modulos_arka(P, T):
     # 11. Módulos STORAGE (018 y 019)
     # Basado en el producto de P * T
     pt_product = P * T
+    
+    modulos_necesarios["018"] = math.floor(pt_product/11.9)
+    if pt_product % 11.9 > 8.1:
+        modulos_necesarios["018"] += 1
+    elif pt_product % 11.9 != 0:
+        modulos_necesarios["019"] = 1
 
     
 
@@ -246,24 +254,12 @@ def calcular_modulos_arka(P, T):
             modulos_necesarios["021"] += 2
 
     # 13. Módulos MEALPREP (022 y 023)
-    if 1 <= P <= 4:
-        if T <= 180:
-            modulos_necesarios["022"] += 1
-        else:
-            modulos_necesarios["023"] += 1
-    elif 5 <= P <= 6:
-        if T <= 60:
-            modulos_necesarios["022"] += 1
-        else:
-            modulos_necesarios["023"] += 1
-    elif 7 <= P <= 10:
-        if T < 500: modulos_necesarios["023"] += 1
-        else: modulos_necesarios["022"] += 2
-    elif P > 10: # P >= 11
-        if T < 500:
-            modulos_necesarios["022"] += 2
-        else:
-            modulos_necesarios["023"] += 2
+    if T <= 180:
+        modulos_necesarios["022"] = math.ceil(P / 8)
+    elif 180 < T < 500:
+        modulos_necesarios["023"] = math.ceil(P / 8)
+    else: # T >= 500
+        modulos_necesarios["022"] = math.ceil(P / 8) + 1
 
     # 14. Módulos MEDICAL (024 y 025)
     if 1 <= P <= 4:
