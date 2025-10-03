@@ -49,6 +49,7 @@ def calcular_modulos_arka(P, T, TipoC):
     # Usamos f-string para formatear los números de 1 a 27 como '001', '002', etc.
     modulos_necesarios = {f"{i:03d}": 0 for i in range(1, 28)}
 
+    P_Total = P
     # --- REGLAS DE CÁLCULO ---
 
     # 1. Módulo BASE (001)
@@ -59,6 +60,16 @@ def calcular_modulos_arka(P, T, TipoC):
     # 2. Módulos LABORATORY (002 (tri) y 003)
     # La lógica sigue la tabla de reglas para P y T.
     if TipoC:
+        Times_P = math.floor(P / 16)
+        if T <= 500:
+            modulos_necesarios["003"] += 4 * Times_P
+        elif 500 < T < 1000:
+            modulos_necesarios["002"] += 1 * Times_P
+            modulos_necesarios["003"] += 3 * Times_P
+        else:  # T >= 1000
+            modulos_necesarios["002"] += 4 * Times_P       
+        
+        P = P_Total % 16
         if 1 <= P <= 4:
             if T <= 500:
                 modulos_necesarios["003"] += 1
@@ -97,28 +108,37 @@ def calcular_modulos_arka(P, T, TipoC):
 
     # 4. Módulos RECREATION (005 (tri) y 006)
     # La lógica sigue la tabla de reglas para P y T.
-    if 1 <= P <= 4:
+    Bloques_R = P_Total // 12
+    Resto_R = P_Total % 12
+
+    if T <= 180:
+        modulos_necesarios["006"] += 1 * Bloques_R
+    elif 180 < T <= 500:
+        modulos_necesarios["005"] += 1 * Bloques_R
+        modulos_necesarios["006"] += 1 * Bloques_R
+    else:
+        modulos_necesarios["005"] += 2 * Bloques_R
+
+    if 1 <= Resto_R <= 4:
         if 180 < T <= 500:
             modulos_necesarios["006"] += 1
         elif T > 500:
             modulos_necesarios["005"] += 1
-
-    elif 5 <= P <= 8:
+    elif 5 <= Resto_R <= 8:
         if T <= 180:
             modulos_necesarios["006"] += 1
         elif 180 < T <= 500:
             modulos_necesarios["005"] += 1
-        elif T > 500:
+        else:
             modulos_necesarios["005"] += 1
             modulos_necesarios["006"] += 1
-
-    elif 9 <= P <= 12:
+    elif 9 <= Resto_R <= 12:
         if T <= 180:
             modulos_necesarios["005"] += 1
         elif 180 < T <= 500:
             modulos_necesarios["005"] += 1
             modulos_necesarios["006"] += 1
-        elif T > 500:
+        else:
             modulos_necesarios["005"] += 2
 
     # 5. Módulos HUERTA (007 (Tri) y 008)
@@ -144,85 +164,95 @@ def calcular_modulos_arka(P, T, TipoC):
     # Uno por cada nivel > 1 and < n de cada base
     
     # 9. Módulos SANITARY (012 y 013(tri))
-    if 1 <= P <= 2:
-        if T < 500:
-            modulos_necesarios["012"] += 1
-        elif T >= 500:
-            modulos_necesarios["013"] += 1      
-    elif 3 <= P <= 5:
-        if T <= 180:
-            modulos_necesarios["012"] += 1
-        elif T > 180:
-            modulos_necesarios["013"] += 1
-    elif P == 6:
-        if T <= 60: 
-            modulos_necesarios["012"] += 1
-        elif 60 < T < 500:
-            modulos_necesarios["013"] += 1
-        elif T >= 500: 
+    
+    Bloques_S = P_Total // 6
+    Resto_S = P_Total % 6
+    
+    if T < 500:
+        modulos_necesarios["012"] += 1 * Bloques_S
+    else:
+        modulos_necesarios["013"] += 1 * Bloques_S
+
+    if 1 <= Resto_S <= 2:
+        if T < 500: modulos_necesarios["012"] += 1
+        else: modulos_necesarios["013"] += 1
+    elif 3 <= Resto_S <= 5:
+        if T <= 180: modulos_necesarios["012"] += 1
+        else: modulos_necesarios["013"] += 1
+    elif Resto_S == 6:
+        if T <= 60: modulos_necesarios["012"] += 1
+        elif 60 < T < 500: modulos_necesarios["013"] += 1
+        else: 
             modulos_necesarios["012"] += 1
             modulos_necesarios["013"] += 1
 
     # 11. Módulos EXERCISE (014 y 015)
-    if 1 <= P <= 4:
-        if T < 500:
-            modulos_necesarios["014"] += 1
-        else: # T >= 500
-            modulos_necesarios["015"] += 1
-    elif 5 <= P <= 8:
+    Bloques_E = P_Total // 12
+    Resto_E = P_Total % 12
+    if T <= 30:
+        modulos_necesarios["014"] += 2 * Bloques_E
+    elif 30 < T < 500:
+        modulos_necesarios["014"] += 1 * Bloques_E
+        modulos_necesarios["015"] += 1 * Bloques_E
+    else:
+        modulos_necesarios["015"] += 2 * Bloques_E
+
+    if 1 <= Resto_E <= 4:
+        if T < 500: modulos_necesarios["014"] += 1
+        else: modulos_necesarios["015"] += 1
+    elif 5 <= Resto_E <= 8:
         modulos_necesarios["015"] += 1
         if T >= 500: modulos_necesarios["014"] += 1
-    elif 9 <= P <= 12:
+    elif 9 <= Resto_E <= 12:
         if T <= 30: modulos_necesarios["014"] += 2
         elif 30 < T < 500:
             modulos_necesarios["014"] += 1
             modulos_necesarios["015"] += 1
-        else: # T >= 500
+        else:
             modulos_necesarios["015"] += 2
 
     # 12. Módulos SYSTEM (016 y 017)
-    if 1 <= P <= 4:
-        if T <= 180:
-            modulos_necesarios["016"] += 1
-        elif 180 < T < 500:
-            modulos_necesarios["017"] += 1
-        elif T >= 500:
+    Bloques_SYS = P_Total // 12
+    Resto_SYS = P_Total % 12
+    if T <= 180:
+        modulos_necesarios["017"] += 2 * Bloques_SYS
+    elif 180 < T < 500:
+        modulos_necesarios["016"] += 3 * Bloques_SYS
+    else:
+        modulos_necesarios["016"] += 2 * Bloques_SYS
+        modulos_necesarios["017"] += 1 * Bloques_SYS
+
+    if 1 <= Resto_SYS <= 4:
+        if T <= 180: modulos_necesarios["016"] += 1
+        elif 180 < T < 500: modulos_necesarios["017"] += 1
+        else:
             modulos_necesarios["017"] += 1
             modulos_necesarios["016"] += 1 
-    elif 5 <= P <= 6:
-        if T <= 180:
-            modulos_necesarios["016"] += 1
-        elif 180 < T < 500:
-            modulos_necesarios["016"] += 2
-        elif 500 <= T < 600:
+    elif 5 <= Resto_SYS <= 6:
+        if T <= 180: modulos_necesarios["016"] += 1
+        elif 180 < T < 500: modulos_necesarios["016"] += 2
+        else:
             modulos_necesarios["016"] += 1
             modulos_necesarios["017"] += 1
-        elif T >= 600:
+    elif 7 <= Resto_SYS <= 8:
+        if T <= 180: modulos_necesarios["017"] += 1
+        elif 180 < T < 500: modulos_necesarios["016"] += 2
+        else:
             modulos_necesarios["016"] += 1
             modulos_necesarios["017"] += 1
-    elif 7 <= P <= 8:
-        if T <= 180:
-            modulos_necesarios["017"] += 1
-        elif 180 < T < 500:
-            modulos_necesarios["016"] += 2
-        elif T >= 500:
-            modulos_necesarios["016"] += 1
-            modulos_necesarios["017"] += 1
-    elif 9 <= P <= 10:
+    elif 9 <= Resto_SYS <= 10:
         if T <= 180:
             modulos_necesarios["016"] += 1
             modulos_necesarios["017"] += 1
         elif 180 < T < 500:
             modulos_necesarios["016"] += 3
-        elif T >= 500:
+        else:
             modulos_necesarios["016"] += 2
             modulos_necesarios["017"] += 1
-    elif 11 <= P <= 12:
-        if T <= 180:
-            modulos_necesarios["017"] += 2
-        elif 180 < T < 500:
-            modulos_necesarios["016"] += 3
-        elif T >= 500:
+    elif 11 <= Resto_SYS <= 12:
+        if T <= 180: modulos_necesarios["017"] += 2
+        elif 180 < T < 500: modulos_necesarios["016"] += 3
+        else:
             modulos_necesarios["016"] += 2
             modulos_necesarios["017"] += 1
 
@@ -240,18 +270,21 @@ def calcular_modulos_arka(P, T, TipoC):
 
 
     # 12. Módulos COMPUTER (020 y 021) - REGLAS ACTUALIZADAS
-    if 1 <= P <= 8:
-        if T <= 180:
-            modulos_necesarios["020"] += 1
-        else:
-            modulos_necesarios["021"] += 1
-    elif 9 <= P <= 12:
-         modulos_necesarios["021"] += 1 # No depende de T
-    elif 13 <= P <= 16:
-        if T <= 180:
-            modulos_necesarios["020"] += 2
-        else:
-            modulos_necesarios["021"] += 2
+    Bloques_C = P_Total // 16
+    Resto_C = P_Total % 16
+    if T <= 180:
+        modulos_necesarios["020"] += 2 * Bloques_C
+    else:
+        modulos_necesarios["021"] += 2 * Bloques_C
+
+    if 1 <= Resto_C <= 8:
+        if T <= 180: modulos_necesarios["020"] += 1
+        else: modulos_necesarios["021"] += 1
+    elif 9 <= Resto_C <= 12:
+        modulos_necesarios["021"] += 1
+    elif 13 <= Resto_C <= 16:
+        if T <= 180: modulos_necesarios["020"] += 2
+        else: modulos_necesarios["021"] += 2
 
     # 13. Módulos MEALPREP (022 y 023)
     if T <= 180:
@@ -262,36 +295,37 @@ def calcular_modulos_arka(P, T, TipoC):
         modulos_necesarios["022"] = math.ceil(P / 8) + 1
 
     # 14. Módulos MEDICAL (024 y 025)
-    if 1 <= P <= 4:
-        if T <= 180:
-            modulos_necesarios["024"] += 1
+    Bloques_M = P_Total // 12
+    Resto_M = P_Total % 12
+    if T <= 180:
+        modulos_necesarios["025"] += 2 * Bloques_M
+    else:
+        modulos_necesarios["024"] += 2 * Bloques_M
+
+    if 1 <= Resto_M <= 4:
+        if T <= 180: modulos_necesarios["024"] += 1
+        else: modulos_necesarios["025"] += 1
+    elif 5 <= Resto_M <= 6:
+        if T <= 60: modulos_necesarios["024"] += 1
+        elif 60 < T < 500: modulos_necesarios["025"] += 1
+        else: modulos_necesarios["024"] += 2
+    elif 7 <= Resto_M <= 8:
+        if T <= 180: modulos_necesarios["025"] += 1
+        elif 180 < T < 500: modulos_necesarios["025"] += 2
         else:
-            modulos_necesarios["025"] += 1
-    elif 5 <= P <= 6:
-        if T <= 60:
-            modulos_necesarios["024"] += 1
-        elif 60 < T < 500:
-            modulos_necesarios["025"] += 1
-        else: # T >= 500
-            modulos_necesarios["024"] += 2
-    elif 7 <= P <= 8:
-        if T <= 180: 
-            modulos_necesarios["025"] += 1
-        elif 180 < T < 500:
-            modulos_necesarios["025"] += 2
-        else: # T >= 500
             modulos_necesarios["024"] += 1
             modulos_necesarios["025"] += 1
-    elif 9 <= P <= 12: 
-        if T <= 180:
-            modulos_necesarios["025"] += 2
-        else: # T > 180
-            modulos_necesarios["024"] += 2
+    elif 9 <= Resto_M <= 12:
+        if T <= 180: modulos_necesarios["025"] += 2
+        else: modulos_necesarios["024"] += 2
             
     # 15. Módulos SLEEP (026 y 027)
-    if 1 <= P <= 2:
+    Bloques_SLP = P_Total // 4
+    Resto_SLP = P_Total % 4
+    modulos_necesarios["027"] += Bloques_SLP
+    if Resto_SLP in (1,2):
         modulos_necesarios["026"] += 1
-    elif 3 <= P <= 4:
+    elif Resto_SLP in (3,4):
         modulos_necesarios["027"] += 1
 
     return modulos_necesarios
