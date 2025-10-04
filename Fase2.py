@@ -32,6 +32,11 @@ import Fase1
 import random
 from typing import List, Tuple, Dict, Optional
 
+# =============================================================================
+# CONTADOR GLOBAL DE ARKAS
+# =============================================================================
+contador_arkas = 0
+
 # Obtener inventario de módulos desde Fase1
 inventario = Fase1.calcular_modulos_arka(30, 500, True)
 '''
@@ -358,17 +363,29 @@ Piso 3: [Cara A] [Cara B] [Cara C] [Cara D]
 
 def nueva_arka():
     """
-    Crea una nueva arka vacía (4x4)
+    Crea una nueva arka vacía (4x4) con número de arka
     
     Estructura: 4 pisos x 4 caras por piso
     Cada posición se inicializa como None (vacía)
+    Incrementa el contador global de arkas ANTES de asignar el número
     
     Returns:
-        List[List]: Matriz 4x4 con todas las posiciones en None
+        Dict: Diccionario con la arka y su número
     """
-    return [[None for _ in range(4)] for _ in range(4)]
+    global contador_arkas
+    
+    # Incrementar contador ANTES de asignar el número
+    contador_arkas += 1
+    numero_arka = contador_arkas
+    
+    arka = [[None for _ in range(4)] for _ in range(4)]
+    
+    return {
+        "numero": numero_arka,
+        "matriz": arka
+    }
 
-def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
+def es_valida(arka_data, piso: int, cara: int, modulo_id: str) -> bool:
     """
     Verifica si es válido colocar un módulo en una posición específica
     
@@ -382,7 +399,7 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     - Módulos sanitarios (012, 013) requieren otro sanitario debajo si están en piso 1+
     
     Args:
-        arka: La arka donde queremos colocar el módulo
+        arka_data: Datos de la arka (puede ser matriz o diccionario)
         piso: Piso donde queremos colocar (0-3)
         cara: Cara donde queremos colocar (0-3)
         modulo_id: ID del módulo que queremos colocar
@@ -390,6 +407,12 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     Returns:
         bool: True si es válido colocar, False si no
     """
+    # Obtener la matriz de la arka
+    if isinstance(arka_data, dict):
+        arka = arka_data["matriz"]
+    else:
+        arka = arka_data
+    
     # PASO 1: Verificar que la posición esté vacía
     if arka[piso][cara] is not None:
         return False
@@ -427,7 +450,7 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     
     return True  # Si llegamos aquí, es válido colocar el módulo
 
-def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> int:
+def calcular_score(arka_data, piso: int, cara: int, modulo_id: str) -> int:
     """
     Calcula el score de una posición para un módulo específico
     
@@ -444,7 +467,7 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     - Cara 0 y Cara 3 son adyacentes entre sí (como un cilindro)
     
     Args:
-        arka: La arka donde evaluamos la posición
+        arka_data: Datos de la arka (puede ser matriz o diccionario)
         piso: Piso a evaluar (0-3)
         cara: Cara a evaluar (0-3)
         modulo_id: ID del módulo que queremos colocar
@@ -452,6 +475,12 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     Returns:
         int: Score de la posición (mayor = mejor)
     """
+    # Obtener la matriz de la arka
+    if isinstance(arka_data, dict):
+        arka = arka_data["matriz"]
+    else:
+        arka = arka_data
+    
     score = 0
     
     # PASO 1: Verificar prioridades SOLO con módulos horizontalmente adyacentes
@@ -512,7 +541,7 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     
     return score
 
-def encontrar_mejor_posicion(arka: List[List], modulo_id: str) -> Tuple[int, int, int]:
+def encontrar_mejor_posicion(arka_data, modulo_id: str) -> Tuple[int, int, int]:
     """
     Encuentra la mejor posición para un módulo en una arka
     
@@ -525,13 +554,19 @@ def encontrar_mejor_posicion(arka: List[List], modulo_id: str) -> Tuple[int, int
     3. Guarda la posición con el mayor score
     
     Args:
-        arka: La arka donde buscar la mejor posición
+        arka_data: Datos de la arka (puede ser matriz o diccionario)
         modulo_id: ID del módulo que queremos colocar
     
     Returns:
         Tuple[int, int, int]: (piso, cara, score) de la mejor posición
         None si no hay posiciones válidas
     """
+    # Obtener la matriz de la arka
+    if isinstance(arka_data, dict):
+        arka = arka_data["matriz"]
+    else:
+        arka = arka_data
+    
     mejor_score = -1  # Inicializamos con un score muy bajo
     mejor_posicion = None
     
@@ -539,9 +574,9 @@ def encontrar_mejor_posicion(arka: List[List], modulo_id: str) -> Tuple[int, int
     for piso in range(4):
         for cara in range(4):
             # Solo evaluamos posiciones válidas (que cumplan restricciones)
-            if es_valida(arka, piso, cara, modulo_id):
+            if es_valida(arka_data, piso, cara, modulo_id):
                 # Calculamos el score de esta posición
-                score = calcular_score(arka, piso, cara, modulo_id)
+                score = calcular_score(arka_data, piso, cara, modulo_id)
                 
                 # Si este score es mejor que el anterior, lo guardamos
                 if score > mejor_score:
@@ -550,7 +585,7 @@ def encontrar_mejor_posicion(arka: List[List], modulo_id: str) -> Tuple[int, int
     
     return mejor_posicion  # Retornamos la mejor posición encontrada
 
-def agregar_modulo(arkas: List[List], modulo_id: str) -> bool:
+def agregar_modulo(arkas: List[Dict], modulo_id: str) -> bool:
     """
     Intenta agregar un módulo a las arkas existentes o crear una nueva
     
@@ -568,25 +603,25 @@ def agregar_modulo(arkas: List[List], modulo_id: str) -> bool:
     """
     # ESTRATEGIA 1: Intentar colocar en alguna arka existente
     # Esto optimiza el uso del espacio (menos arkas = mejor eficiencia)
-    for i, arka in enumerate(arkas):
-        posicion = encontrar_mejor_posicion(arka, modulo_id)
+    for i, arka_data in enumerate(arkas):
+        posicion = encontrar_mejor_posicion(arka_data, modulo_id)
         
         if posicion is not None:  # Si encontramos una posición válida
             piso, cara, score = posicion
-            arka[piso][cara] = modulo_id  # Colocamos el módulo
-            print(f"Módulo {modulo_id} colocado en Arka {i+1}, Piso {piso+1}, Cara {cara+1} (Score: {score})")
+            arka_data["matriz"][piso][cara] = modulo_id  # Colocamos el módulo
+            print(f"Módulo {modulo_id} colocado en Arka {arka_data['numero']}, Piso {piso+1}, Cara {cara+1} (Score: {score})")
             return True  # Éxito: módulo colocado
     
     # ESTRATEGIA 2: Si no se pudo colocar en arkas existentes, crear nueva arka
     # Esto garantiza que siempre podamos colocar el módulo
-    nueva_arka_instancia = nueva_arka()  # Creamos arka vacía
-    posicion = encontrar_mejor_posicion(nueva_arka_instancia, modulo_id)
+    nueva_arka_data = nueva_arka()  # Creamos arka vacía
+    posicion = encontrar_mejor_posicion(nueva_arka_data, modulo_id)
     
     if posicion is not None:  # Debería ser siempre válido en arka vacía
         piso, cara, score = posicion
-        nueva_arka_instancia[piso][cara] = modulo_id  # Colocamos el módulo
-        arkas.append(nueva_arka_instancia)  # Añadimos la nueva arka a la lista
-        print(f"Módulo {modulo_id} colocado en NUEVA Arka {len(arkas)}, Piso {piso+1}, Cara {cara+1} (Score: {score})")
+        nueva_arka_data["matriz"][piso][cara] = modulo_id  # Colocamos el módulo
+        arkas.append(nueva_arka_data)  # Añadimos la nueva arka a la lista
+        print(f"Módulo {modulo_id} colocado en NUEVA Arka {nueva_arka_data['numero']}, Piso {piso+1}, Cara {cara+1} (Score: {score})")
         return True  # Éxito: módulo colocado en nueva arka
     
     return False  # Error: no se pudo colocar (no debería pasar nunca)
@@ -631,7 +666,7 @@ def ordenar_modulos_por_prioridad(inventario: Dict[str, int]) -> List[Tuple[str,
     
     return ordenados
 
-def colocar_inventario_completo(inventario: Dict[str, int]) -> List[List[List]]:
+def colocar_inventario_completo(inventario: Dict[str, int]) -> List[Dict]:
     """
     Coloca todo el inventario en las arkas
     
@@ -668,7 +703,7 @@ def colocar_inventario_completo(inventario: Dict[str, int]) -> List[List[List]]:
     print(f"Total de arkas utilizadas: {len(arkas)}")
     return arkas
 
-def visualizar_arkas(arkas: List[List[List]]):
+def visualizar_arkas(arkas: List[Dict]):
     """
     Visualiza las arkas de forma clara y legible
     
@@ -684,16 +719,18 @@ def visualizar_arkas(arkas: List[List[List]]):
     # Importar diccionario de información de módulos desde Fase1
     MODULOS_INFO = Fase1.MODULOS_INFO
     
-    for i, arka in enumerate(arkas):
-        print(f"\n--- ARKA {i+1} ---")
+    for arka_data in arkas:
+        print(f"\n--- ARKA {arka_data['numero']} ---")
         
-        # VISUALIZACIÓN 1: Con números (como antes)
+        matriz = arka_data["matriz"]
+        
+        # VISUALIZACIÓN 1: Con números
         print("Números:")
         for piso in range(4):
             modulos_piso = []
             for cara in range(4):
-                if arka[piso][cara] is not None:
-                    modulos_piso.append(arka[piso][cara])
+                if matriz[piso][cara] is not None:
+                    modulos_piso.append(matriz[piso][cara])
                 else:
                     modulos_piso.append('---')
             print(f"Piso {piso+1}: {modulos_piso}")
@@ -705,8 +742,8 @@ def visualizar_arkas(arkas: List[List[List]]):
         for piso in range(4):
             modulos_piso = []
             for cara in range(4):
-                if arka[piso][cara] is not None:
-                    modulo_id = arka[piso][cara]
+                if matriz[piso][cara] is not None:
+                    modulo_id = matriz[piso][cara]
                     modulo_nombre = MODULOS_INFO.get(modulo_id, f"Desconocido_{modulo_id}")
                     modulos_piso.append(f"{modulo_id}: {modulo_nombre}")
                 else:
@@ -714,7 +751,7 @@ def visualizar_arkas(arkas: List[List[List]]):
             print(f"Piso {piso+1}: {modulos_piso}")
         print()
 
-def calcular_estadisticas(arkas: List[List[List]]):
+def calcular_estadisticas(arkas: List[Dict]):
     """
     Calcula estadísticas de la colocación
     
@@ -728,7 +765,7 @@ def calcular_estadisticas(arkas: List[List[List]]):
         arkas: Lista de arkas para analizar
     """
     total_posiciones = len(arkas) * 16  # 16 posiciones por arka (4x4)
-    posiciones_ocupadas = sum(1 for arka in arkas for piso in arka for cara in piso if cara is not None)
+    posiciones_ocupadas = sum(1 for arka_data in arkas for piso in arka_data["matriz"] for cara in piso if cara is not None)
     eficiencia = (posiciones_ocupadas / total_posiciones) * 100 if total_posiciones > 0 else 0
     
     print(f"\n=== ESTADÍSTICAS ===")
