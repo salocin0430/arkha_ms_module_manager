@@ -2,6 +2,7 @@ import Fase2, Fase1
 import json
 from datetime import datetime
 import numpy as np
+import math
 
 constantes = {
     "altura_modulo": 3.1,
@@ -59,7 +60,7 @@ def id_a_modulo(modulo_id):
     
     return mapeo_modulos.get(modulo_id, f"unknown_module_{modulo_id}")
 
-def añadir_modulos_por_arka(arkas_resultado):
+def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
     """
     Añade módulos específicos por cada arka en estructura vertical:
     - 1 módulo 001 (base)
@@ -75,6 +76,11 @@ def añadir_modulos_por_arka(arkas_resultado):
     modulos_adicionales = []
     posicion_base_anterior = None
     posicion_base_actual = None
+    number_of_access_core = 0
+    if T <= 600:
+        number_of_access_core = math.ceil(P / 6)
+    else: 
+        number_of_access_core = math.ceil(P / 6) * 2
     
     for i, arka in enumerate(arkas_resultado):
         numero_arka = arka["numero"]
@@ -104,6 +110,16 @@ def añadir_modulos_por_arka(arkas_resultado):
             "scale": [1, 1, 1]
         }
         modulos_adicionales.append(modulo_001)
+        
+        # 1 módulo 010 (access core) - en el centro de la arka
+        if number_of_access_core <= i:
+            modulo_010 = {
+                "id": id_a_modulo("010"),
+                "position": posicion_base_actual.tolist(),
+                "rotation": [0, 0, 0],
+                "scale": [1, 1, 1]
+            }
+            modulos_adicionales.append(modulo_010)
         
         # 4 módulos 011 (torre vertical) - uno encima del otro
         for nivel in range(4):
@@ -172,18 +188,19 @@ def añadir_modulos_por_arka(arkas_resultado):
                 modulos_adicionales.append(piso_cara_D)         
             
         if not es_ultima_arka:
+            print(arka["direccion_actual"])
             centro_piso2 = posicion_base_actual + np.array([0, (2) * constantes["altura_modulo"], 0])
             if arka["direccion_actual"] == "ARRIBA":
-                posicion_099 =  [centro_piso2[0], centro_piso2[1], centro_piso2[2] - 2*constantes["ancho_modelo"]]
+                posicion_099 =  [centro_piso2[0], centro_piso2[1], centro_piso2[2] + 2*constantes["ancho_modelo"]]
                 rotation_099 = constantes["0_grados"]
             elif arka["direccion_actual"] == "IZQ":
-                posicion_099 = [centro_piso2[0] - 2*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
+                posicion_099 = [centro_piso2[0] + 2*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
                 rotation_099 = constantes["270_grados_derecha"]
             elif arka["direccion_actual"] == "ABAJO":
-                posicion_099 = [centro_piso[0], centro_piso[1], centro_piso[2] + 2*constantes["ancho_modelo"]]
+                posicion_099 = [centro_piso[0], centro_piso[1], centro_piso[2] - 2*constantes["ancho_modelo"]]
                 rotation_099 = constantes["180_grados"]
             elif arka["direccion_actual"] == "DER":
-                posicion_099 =  [centro_piso[0] + 2*constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                posicion_099 =  [centro_piso[0] - 2*constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
                 rotation_099 = constantes["90_grados_derecha"]
             
             direccion_actual_099 = {
@@ -236,11 +253,14 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
 
 # Ejecutar el proceso
 if __name__ == "__main__":
+    P = 10
+    T = 30
+    TipoC = True
     inventario = Fase1.calcular_modulos_arka(10, 30, True)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
     print(arkas_resultado)
     # Generar JSON SOLO con módulos 001, 011 y 004
-    json_result = generar_json_solo_001_011_004(arkas_resultado)
+    json_result = generar_json_solo_001_011_004(arkas_resultado, P, T, TipoC)
     
     # Guardar en archivo
     with open('arkas_resultado.json', 'w', encoding='utf-8') as f:
