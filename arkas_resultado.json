@@ -1,10 +1,11 @@
 {
   "parameters": {
-    "passengers": 30,
-    "duration": 500,
-    "isScientific": true
+    "passengers": 10,
+    "duration": 90,
+    "terrain": "moon",
+    "isScientific": false
   },
-  "totalModules": 37,
+  "totalModules": 34,
   "modules": [
     {
       "id": "base_l1_v1",
@@ -115,7 +116,7 @@
       ]
     },
     {
-      "id": "l2_systemsbaytri_v1",
+      "id": "l2_exercisebaytri_v1",
       "position": [
         0.0,
         3.1,
@@ -133,7 +134,7 @@
       ]
     },
     {
-      "id": "lab_l2_v1",
+      "id": "l2_storagebaytri_v1",
       "position": [
         3.6,
         3.1,
@@ -151,7 +152,7 @@
       ]
     },
     {
-      "id": "l3_galleycomputerbaytri_v1",
+      "id": "l2_systemsbaytri_v1",
       "position": [
         0.0,
         3.1,
@@ -169,7 +170,7 @@
       ]
     },
     {
-      "id": "lab_l2_v1",
+      "id": "l3_galleycomputerbaytri_v1",
       "position": [
         -3.6,
         3.1,
@@ -187,7 +188,7 @@
       ]
     },
     {
-      "id": "lab_l2_v1",
+      "id": "l3_medbaytri_v1",
       "position": [
         0.0,
         6.2,
@@ -205,7 +206,7 @@
       ]
     },
     {
-      "id": "huertatri_l1_v1",
+      "id": "l3_medbaytri_v1",
       "position": [
         3.6,
         6.2,
@@ -259,7 +260,7 @@
       ]
     },
     {
-      "id": "huerta_l1_v1",
+      "id": "huertatri_l1_v1",
       "position": [
         0.0,
         9.3,
@@ -277,7 +278,7 @@
       ]
     },
     {
-      "id": "l2_exercisebay_v1",
+      "id": "huerta_l1_v1",
       "position": [
         3.6,
         9.3,
@@ -385,7 +386,7 @@
       ]
     },
     {
-      "id": "l2_storagebay_v1",
+      "id": "l3_mealprepbay_v1",
       "position": [
         -3.6,
         12.4,
@@ -407,7 +408,7 @@
       "position": [
         0.0,
         6.2,
-        -7.2
+        7.2
       ],
       "rotation": [
         0,
@@ -529,7 +530,7 @@
       ]
     },
     {
-      "id": "l3_medbaytri_v1",
+      "id": "sanitarybay_l2_v1",
       "position": [
         0.0,
         3.1,
@@ -538,24 +539,6 @@
       "rotation": [
         0,
         0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "l3_medbaytri_v1",
-      "position": [
-        3.6,
-        3.1,
-        14.4
-      ],
-      "rotation": [
-        0,
-        4.71239,
         0
       ],
       "scale": [
@@ -574,24 +557,6 @@
       "rotation": [
         0,
         3.14159,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "l3_mealprepbay_v1",
-      "position": [
-        -3.6,
-        3.1,
-        14.4
-      ],
-      "rotation": [
-        0,
-        1.5708,
         0
       ],
       "scale": [
@@ -637,24 +602,6 @@
       ]
     },
     {
-      "id": "sanitarybay_l2_v1",
-      "position": [
-        0.0,
-        6.2,
-        18.0
-      ],
-      "rotation": [
-        0,
-        3.14159,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
       "id": "l2_sleepwardbay_v1",
       "position": [
         0.0,
@@ -674,9 +621,9 @@
     }
   ],
   "metadata": {
-    "generatedAt": "2025-10-05T00:12:59.130132Z",
+    "generatedAt": "2025-10-05T00:50:17.616431Z",
     "algorithmVersion": "v3.0.0",
-    "estimatedCost": 129500,
+    "estimatedCost": 119000,
     "currency": "ARKHA",
     "totalArkas": 2,
     "posicionBaseAnterior": [

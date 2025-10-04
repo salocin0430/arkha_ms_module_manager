@@ -256,9 +256,9 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
 # Ejecutar el proceso
 if __name__ == "__main__":
     P = 10
-    T = 30
-    TipoC = True
-    inventario = Fase1.calcular_modulos_arka(10, 30, True)
+    T = 90
+    TipoC = False
+    inventario = Fase1.calcular_modulos_arka(P, T, False)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
     print(arkas_resultado)
     json_result = generar_json_solo_001_011_004(arkas_resultado, P, T, "moon", TipoC)

@@ -759,6 +759,10 @@ def colocar_inventario_completo(inventario: Dict[str, int]) -> List[Dict]:
     Returns:
         List[List[List]]: Lista de arkas con todos los módulos colocados
     """
+    # REINICIAR CONTADOR GLOBAL para cada ejecución
+    global contador_arkas
+    contador_arkas = 0
+    
     arkas = []  # Lista vacía de arkas (empezamos sin ninguna)
     modulos_ordenados = ordenar_modulos_por_prioridad(inventario)  # Ordenamos por prioridad
     
