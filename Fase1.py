@@ -141,12 +141,6 @@ def calcular_modulos_arka(P, T, TipoC):
         modulos_necesarios["008"] += 1
 
 
-    # 7. Módulo ACCESS (010)
-    if T <= 600:
-        modulos_necesarios["010"] = math.ceil(P / 6)
-    else: 
-        modulos_necesarios["010"] = math.ceil(P / 6) * 2
-
     
     # 9. Módulos SANITARY (012 y 013(tri))
     
@@ -318,6 +312,12 @@ def calcular_modulos_arka(P, T, TipoC):
     total_modulos_sin_base = sum(modulos_necesarios.values())
     
     total_modulos = total_modulos_sin_base
+    
+    # 7. Módulo ACCESS (010)
+    if T <= 600:
+        total_modulos_sin_base = math.ceil(P / 6)
+    else: 
+        total_modulos_sin_base = math.ceil(P / 6) * 2
     # 1. Módulo BASE (001)
     total_modulos_sin_base += math.ceil(total_modulos_sin_base/16)
     

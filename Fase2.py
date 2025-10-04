@@ -369,9 +369,11 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     Esta función es CRÍTICA porque verifica:
     1. Que la posición esté vacía
     2. Que no viole ninguna restricción con módulos horizontalmente adyacentes
+    3. Regla especial para módulos sanitarios: solo pueden estar en piso 1+ si hay otro sanitario debajo
     
     IMPORTANTE: Solo verifica restricciones con módulos de IZQUIERDA y DERECHA
     - Cara 0 y Cara 3 son adyacentes entre sí (como un cilindro)
+    - Módulos sanitarios (012, 013) requieren otro sanitario debajo si están en piso 1+
     
     Args:
         arka: La arka donde queremos colocar el módulo
@@ -406,6 +408,16 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
         # Solo verificamos la dirección específica definida en la lista
         if (modulo_id, modulo_derecha) in restricciones_prohibidas:
             return False
+    
+    # PASO 3: Regla especial para módulos sanitarios
+    # Los módulos sanitarios (012, 013) solo pueden estar en piso 1 o superior
+    # si hay otro módulo sanitario justo debajo
+    if modulo_id in ["012", "013"]:  # Módulos sanitarios
+        if piso > 0:  # Si no está en el piso 0 (piso 1)
+            # Verificar si hay un módulo sanitario justo debajo
+            modulo_debajo = arka[piso - 1][cara]
+            if modulo_debajo not in ["012", "013"]:  # Si no hay sanitario debajo
+                return False
     
     return True  # Si llegamos aquí, es válido colocar el módulo
 
@@ -582,7 +594,7 @@ def ordenar_modulos_por_prioridad(inventario: Dict[str, int]) -> List[Tuple[str,
     
     # CATEGORÍA 2: Módulos prioritarios (con preferencias específicas)
     # Estos se benefician de estar cerca de otros módulos
-    modulos_prioritarios = ["001", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "014", "016", "018", "020", "022", "024", "026"]
+    modulos_prioritarios = ["001", "003", "004", "005", "006", "007", "008", "009", "011", "012", "014", "016", "018", "020", "022", "024", "026"]
     
     # Construimos la lista ordenada
     ordenados = []
@@ -644,21 +656,41 @@ def visualizar_arkas(arkas: List[List[List]]):
     - Cada fila es un piso
     - Cada columna es una cara
     - '---' significa posición vacía
-    - Los números son los IDs de los módulos
+    - Primero muestra números, luego nombres completos
     
     Args:
         arkas: Lista de arkas a visualizar
     """
+    # Importar diccionario de información de módulos desde Fase1
+    MODULOS_INFO = Fase1.MODULOS_INFO
+    
     for i, arka in enumerate(arkas):
         print(f"\n--- ARKA {i+1} ---")
+        
+        # VISUALIZACIÓN 1: Con números (como antes)
+        print("Números:")
         for piso in range(4):
-            # Creamos una lista con los módulos de este piso
             modulos_piso = []
             for cara in range(4):
                 if arka[piso][cara] is not None:
                     modulos_piso.append(arka[piso][cara])
                 else:
-                    modulos_piso.append('---')  # Posición vacía
+                    modulos_piso.append('---')
+            print(f"Piso {piso+1}: {modulos_piso}")
+        
+        print()
+        
+        # VISUALIZACIÓN 2: Con nombres completos
+        print("Nombres:")
+        for piso in range(4):
+            modulos_piso = []
+            for cara in range(4):
+                if arka[piso][cara] is not None:
+                    modulo_id = arka[piso][cara]
+                    modulo_nombre = MODULOS_INFO.get(modulo_id, f"Desconocido_{modulo_id}")
+                    modulos_piso.append(f"{modulo_id}: {modulo_nombre}")
+                else:
+                    modulos_piso.append('---')
             print(f"Piso {piso+1}: {modulos_piso}")
         print()
 
