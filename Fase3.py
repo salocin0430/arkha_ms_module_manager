@@ -9,6 +9,11 @@ constantes = {
     "x": "horizontal",
     "y": "vertical",
     "z": "profundidad",
+    "0_grados": [0, 0, 0],
+    "90_grados_derecha": [0, 1.5708, 0],
+    "180_grados": [0, 3.14159, 0],
+    "270_grados_derecha": [0, 4.71239, 0],
+    "360_grados": [0, 6.28318, 0]
 }
 
 def id_a_modulo(modulo_id):
@@ -71,8 +76,9 @@ def añadir_modulos_por_arka(arkas_resultado):
     posicion_base_anterior = None
     posicion_base_actual = None
     
-    for arka in arkas_resultado:
+    for i, arka in enumerate(arkas_resultado):
         numero_arka = arka["numero"]
+        es_ultima_arka = (i == len(arkas_resultado) - 1)
         
         if numero_arka == 1:
             posicion_base_actual = np.array([0, 0, 0])
@@ -119,6 +125,74 @@ def añadir_modulos_por_arka(arkas_resultado):
             "scale": [1, 1, 1]
         }
         modulos_adicionales.append(modulo_004)
+        
+        #Arkas por piso
+        for piso in range(4):
+            
+            print(f"Arka {numero_arka} - Piso {piso+1} - Es última: {es_ultima_arka}")
+            print(id_a_modulo(arka["matriz"][piso][0]))
+            print(id_a_modulo(arka["matriz"][piso][1]))
+            print(id_a_modulo(arka["matriz"][piso][2]))
+            print(id_a_modulo(arka["matriz"][piso][3]))
+            
+            
+            
+            
+            centro_piso = posicion_base_actual + np.array([0, (piso+1) * constantes["altura_modulo"], 0])
+            print(centro_piso)
+            piso_cara_A = {
+                "id": id_a_modulo(arka["matriz"][piso][0]),
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] - constantes["ancho_modelo"]],
+                "rotation": constantes["0_grados"],
+                "scale": [1, 1, 1]
+            }
+            
+            modulos_adicionales.append(piso_cara_A)
+            
+            piso_cara_B = {
+                "id": id_a_modulo(arka["matriz"][piso][1]),
+                "position": [centro_piso[0] + constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                "rotation": constantes["270_grados_derecha"],
+                "scale": [1, 1, 1]
+            }
+            modulos_adicionales.append(piso_cara_B)
+            piso_cara_C = {
+                "id": id_a_modulo(arka["matriz"][piso][2]),
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] + constantes["ancho_modelo"]],
+                "rotation": constantes["180_grados"],
+                "scale": [1, 1, 1]
+            }
+            modulos_adicionales.append(piso_cara_C)
+            piso_cara_D = {
+                "id": id_a_modulo(arka["matriz"][piso][3]),
+                "position": [centro_piso[0] - constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                "rotation": constantes["90_grados_derecha"],
+                "scale": [1, 1, 1]
+            }
+            modulos_adicionales.append(piso_cara_D)         
+            
+        if not es_ultima_arka:
+            centro_piso2 = posicion_base_actual + np.array([0, (2) * constantes["altura_modulo"], 0])
+            if arka["direccion_actual"] == "ARRIBA":
+                posicion_099 =  [centro_piso2[0], centro_piso2[1], centro_piso2[2] - 2*constantes["ancho_modelo"]]
+                rotation_099 = constantes["0_grados"]
+            elif arka["direccion_actual"] == "IZQ":
+                posicion_099 = [centro_piso2[0] + 2*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
+                rotation_099 = constantes["270_grados_derecha"]
+            elif arka["direccion_actual"] == "ABAJO":
+                posicion_099 = [centro_piso[0], centro_piso[1], centro_piso[2] + 2*constantes["ancho_modelo"]]
+                rotation_099 = constantes["180_grados"]
+            elif arka["direccion_actual"] == "DER":
+                posicion_099 =  [centro_piso[0] - 2*constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                rotation_099 = constantes["90_grados_derecha"]
+            
+            direccion_actual_099 = {
+                "id": id_a_modulo("009"),
+                "position": posicion_099,
+                "rotation": rotation_099,
+                "scale": [1, 1, 1]
+            }
+            modulos_adicionales.append(direccion_actual_099)
     
     return modulos_adicionales, posicion_base_anterior.tolist() if posicion_base_anterior is not None else None, posicion_base_actual.tolist()
 
@@ -162,9 +236,9 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
 
 # Ejecutar el proceso
 if __name__ == "__main__":
-    inventario = Fase1.calcular_modulos_arka(30, 500, True)
+    inventario = Fase1.calcular_modulos_arka(10, 30, True)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
-    
+    print(arkas_resultado)
     # Generar JSON SOLO con módulos 001, 011 y 004
     json_result = generar_json_solo_001_011_004(arkas_resultado)
     

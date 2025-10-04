@@ -4,7 +4,7 @@
     "duration": 500,
     "isScientific": true
   },
-  "totalModules": 36,
+  "totalModules": 45,
   "modules": [
     {
       "id": "base_l1_v1",
@@ -115,6 +115,312 @@
       ]
     },
     {
+      "id": "l2_systemsbaytri_v1",
+      "position": [
+        0.0,
+        3.1,
+        -3.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lab_l2_v1",
+      "position": [
+        3.6,
+        3.1,
+        0.0
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l3_galleycomputerbaytri_v1",
+      "position": [
+        0.0,
+        3.1,
+        3.6
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lab_l2_v1",
+      "position": [
+        -3.6,
+        3.1,
+        0.0
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lab_l2_v1",
+      "position": [
+        0.0,
+        6.2,
+        -3.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "huertatri_l1_v1",
+      "position": [
+        3.6,
+        6.2,
+        0.0
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "circulacion_l1_v1",
+      "position": [
+        0.0,
+        6.2,
+        3.6
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "huertatri_l1_v1",
+      "position": [
+        -3.6,
+        6.2,
+        0.0
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "huerta_l1_v1",
+      "position": [
+        0.0,
+        9.3,
+        -3.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_exercisebay_v1",
+      "position": [
+        3.6,
+        9.3,
+        0.0
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_exercisebay_v1",
+      "position": [
+        0.0,
+        9.3,
+        3.6
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_systemsbay_v1",
+      "position": [
+        -3.6,
+        9.3,
+        0.0
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_sleepwardbaytri_v1",
+      "position": [
+        0.0,
+        12.4,
+        -3.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "recreaciontri_l1_v1",
+      "position": [
+        3.6,
+        12.4,
+        0.0
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_sleepwardbaytri_v1",
+      "position": [
+        0.0,
+        12.4,
+        3.6
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_storagebay_v1",
+      "position": [
+        -3.6,
+        12.4,
+        0.0
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "circulacion_l1_v1",
+      "position": [
+        0.0,
+        6.2,
+        -7.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
       "id": "base_l1_v1",
       "position": [
         0.0,
@@ -223,11 +529,11 @@
       ]
     },
     {
-      "id": "base_l1_v1",
+      "id": "l3_medbaytri_v1",
       "position": [
-        14.4,
         0.0,
-        14.4
+        3.1,
+        10.8
       ],
       "rotation": [
         0,
@@ -241,15 +547,15 @@
       ]
     },
     {
-      "id": "transcore_l2_v1",
+      "id": "l3_medbaytri_v1",
       "position": [
-        14.4,
+        3.6,
         3.1,
         14.4
       ],
       "rotation": [
         0,
-        0,
+        4.71239,
         0
       ],
       "scale": [
@@ -259,321 +565,15 @@
       ]
     },
     {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        6.2,
-        14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        9.3,
-        14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        12.4,
-        14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "powercore_l1_v1",
-      "position": [
-        14.4,
-        15.5,
-        14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "base_l1_v1",
-      "position": [
-        14.4,
-        0.0,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        3.1,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        6.2,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        9.3,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        12.4,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "powercore_l1_v1",
-      "position": [
-        14.4,
-        15.5,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "base_l1_v1",
-      "position": [
-        14.4,
-        0.0,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        3.1,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        6.2,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        9.3,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
-      "position": [
-        14.4,
-        12.4,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "powercore_l1_v1",
-      "position": [
-        14.4,
-        15.5,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "base_l1_v1",
-      "position": [
-        0.0,
-        0.0,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "transcore_l2_v1",
+      "id": "sanitarybay_l2_v1",
       "position": [
         0.0,
         3.1,
-        -14.4
+        18.0
       ],
       "rotation": [
         0,
-        0,
+        3.14159,
         0
       ],
       "scale": [
@@ -583,11 +583,29 @@
       ]
     },
     {
-      "id": "transcore_l2_v1",
+      "id": "l3_mealprepbay_v1",
+      "position": [
+        -3.6,
+        3.1,
+        14.4
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "circulacion_l1_v1",
       "position": [
         0.0,
         6.2,
-        -14.4
+        10.8
       ],
       "rotation": [
         0,
@@ -601,11 +619,65 @@
       ]
     },
     {
-      "id": "transcore_l2_v1",
+      "id": "l3_mealprepbay_v1",
+      "position": [
+        3.6,
+        6.2,
+        14.4
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sanitarybay_l2_v1",
+      "position": [
+        0.0,
+        6.2,
+        18.0
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
+      "position": [
+        -3.6,
+        6.2,
+        14.4
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
       "position": [
         0.0,
         9.3,
-        -14.4
+        10.8
       ],
       "rotation": [
         0,
@@ -619,11 +691,65 @@
       ]
     },
     {
-      "id": "transcore_l2_v1",
+      "id": "unknown_module_None",
+      "position": [
+        3.6,
+        9.3,
+        14.4
+      ],
+      "rotation": [
+        0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
+      "position": [
+        0.0,
+        9.3,
+        18.0
+      ],
+      "rotation": [
+        0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
+      "position": [
+        -3.6,
+        9.3,
+        14.4
+      ],
+      "rotation": [
+        0,
+        1.5708,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "l2_sleepwardbay_v1",
       "position": [
         0.0,
         12.4,
-        -14.4
+        10.8
       ],
       "rotation": [
         0,
@@ -637,15 +763,51 @@
       ]
     },
     {
-      "id": "powercore_l1_v1",
+      "id": "unknown_module_None",
       "position": [
-        0.0,
-        15.5,
-        -14.4
+        3.6,
+        12.4,
+        14.4
       ],
       "rotation": [
         0,
+        4.71239,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
+      "position": [
+        0.0,
+        12.4,
+        18.0
+      ],
+      "rotation": [
         0,
+        3.14159,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "unknown_module_None",
+      "position": [
+        -3.6,
+        12.4,
+        14.4
+      ],
+      "rotation": [
+        0,
+        1.5708,
         0
       ],
       "scale": [
@@ -656,20 +818,20 @@
     }
   ],
   "metadata": {
-    "generatedAt": "2025-10-04T19:54:57.808627Z",
+    "generatedAt": "2025-10-04T20:52:38.821312Z",
     "algorithmVersion": "v3.0.0",
-    "estimatedCost": 126000,
+    "estimatedCost": 157500,
     "currency": "ARKHA",
-    "totalArkas": 6,
+    "totalArkas": 2,
     "posicionBaseAnterior": [
       0.0,
       0.0,
-      -14.4
+      14.4
     ],
     "posicionBaseActual": [
       0.0,
       0.0,
-      -14.4
+      14.4
     ]
   }
 }
