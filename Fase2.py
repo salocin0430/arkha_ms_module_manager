@@ -29,7 +29,6 @@ VERSIÓN: 2.0
 """
 
 import Fase1
-import random
 from typing import List, Tuple, Dict, Optional
 
 # =============================================================================
@@ -409,8 +408,35 @@ def nueva_arka():
     
     return {
         "numero": numero_arka,
-        "matriz": arka
+        "matriz": arka,
+        "direccion_actual": direccion_actual,
+        "direccion_anterior": direccion_anterior
     }
+
+def cleaning_postresultado(arkas_resultado):
+    """
+    Método de limpieza post-resultado
+    
+    Toma la lista de arkas resultado y devuelve la última arka
+    
+    Args:
+        arkas_resultado: Lista de arkas resultado
+        
+    Returns:
+        Dict: La última arka de la lista
+    """
+    if not arkas_resultado:
+        print("No hay arkas en el resultado")
+        return None
+    
+    ultima_arka = arkas_resultado[-1]
+    
+    
+    
+    
+    
+    
+    return ultima_arka
 
 def direccion(n):
     if n < 1:
@@ -768,6 +794,7 @@ def visualizar_arkas(arkas: List[Dict]):
         print(f"\n--- ARKA {arka_data['numero']} ---")
         
         matriz = arka_data["matriz"]
+        print(arka_data)
         
         # VISUALIZACIÓN 1: Con números
         print("Números:")
@@ -829,6 +856,12 @@ if __name__ == "__main__":
     
     # PASO 1: Colocar todos los módulos usando el algoritmo inteligente
     arkas_resultado = colocar_inventario_completo(inventario[0])
+    
+    print("===========================================")
+    print(arkas_resultado)
+    print("===========================================")
+    
+    
     
     # PASO 2: Visualizar el resultado en formato legible
     visualizar_arkas(arkas_resultado)
