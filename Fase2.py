@@ -363,10 +363,10 @@ Piso 3: [Cara A] [Cara B] [Cara C] [Cara D]
 
 def nueva_arka():
     """
-    Crea una nueva arka vacía (4x4) con número de arka
+    Crea una nueva arka vacía (4x4) con número de arka y módulos de conexión reservados
     
     Estructura: 4 pisos x 4 caras por piso
-    Cada posición se inicializa como None (vacía)
+    Reserva módulos 009 según la dirección actual y anterior
     Incrementa el contador global de arkas ANTES de asignar el número
     
     Returns:
@@ -378,13 +378,58 @@ def nueva_arka():
     contador_arkas += 1
     numero_arka = contador_arkas
     
+    # Obtener direcciones
+    direccion_actual = direccion(numero_arka)
+    direccion_anterior = None
+    if numero_arka > 1:
+        direccion_anterior = direccion(numero_arka - 1)
+    
+    # Crear matriz vacía
     arka = [[None for _ in range(4)] for _ in range(4)]
+    
+    # RESERVAR MÓDULOS SEGÚN DIRECCIÓN ACTUAL
+    if direccion_actual == "ARRIBA":
+        arka[1][2] = "009"  # Piso2Cara3
+    elif direccion_actual == "IZQ":
+        arka[1][3] = "009"  # Piso2Cara4
+    elif direccion_actual == "ABAJO":
+        arka[1][0] = "009"  # Piso2Cara1
+    elif direccion_actual == "DER":
+        arka[1][1] = "009"  # Piso2Cara2
+    
+    # RESERVAR MÓDULOS SEGÚN DIRECCIÓN ANTERIOR
+    if direccion_anterior == "ARRIBA":
+        arka[1][0] = "009"  # Piso2Cara1
+    elif direccion_anterior == "IZQ":
+        arka[1][1] = "009"  # Piso2Cara2
+    elif direccion_anterior == "ABAJO":
+        arka[1][2] = "009"  # Piso2Cara3
+    elif direccion_anterior == "DER":
+        arka[1][3] = "009"  # Piso2Cara4
     
     return {
         "numero": numero_arka,
         "matriz": arka
     }
 
+def direccion(n):
+    if n < 1:
+        raise ValueError("n debe ser >= 1")
+
+    direcciones = ["ARRIBA", "IZQ", "ABAJO", "DER"]  # orden cíclico
+    pasos = 1
+    actual = 1
+    dir_index = 0
+
+    while True:
+        for _ in range(2):  # dos veces cada longitud
+            for _ in range(pasos):
+                if actual == n:
+                    return direcciones[dir_index]
+                actual += 1
+            dir_index = (dir_index + 1) % 4
+        pasos += 1
+        
 def es_valida(arka_data, piso: int, cara: int, modulo_id: str) -> bool:
     """
     Verifica si es válido colocar un módulo en una posición específica
