@@ -337,7 +337,7 @@ def calcular_modulos_arka(P, T, TipoC):
 # --- EJEMPLO DE USO ---
 if __name__ == "__main__":
     # --- PARÁMETROS DE ENTRADA DE LA MISIÓN ---
-    numero_de_pasajeros = 12
+    numero_de_pasajeros = 30
     tiempo_en_dias = 500
     # -------------------------------------------
 

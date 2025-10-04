@@ -21,6 +21,7 @@ ALGORITMO PRINCIPAL:
 SISTEMA DE SCORING:
 - +10 puntos por cada prioridad satisfecha con módulos horizontalmente adyacentes
 - +15 puntos por estar en piso prioritario (si está definido)
+- -5 puntos por cada piso inferior incompleto (incentiva completar de abajo hacia arriba)
 - +1 punto por cada espacio horizontalmente adyacente vacío (flexibilidad futura)
 
 AUTOR: Sistema de Gestión de Módulos ARKHA
@@ -186,6 +187,9 @@ pisos_prioritarios = {
     "005": [1, 2, 3],  # Recreation Tri - pisos 3, 4 y 5
     "006": [1, 2, 3],  # Recreation normal - pisos 3, 4 y 5
     
+    "007": [0, 1],  # Huerta Tri - pisos 3, 4 y 5
+    "008": [0, 1],  # Huerta normal - pisos 3, 4 y 5
+
     "012": [1], # Sanitary Bay Tri - pisos 2
     "013": [1], # Sanitary Bay normal - pisos 2
     
@@ -204,6 +208,20 @@ pisos_prioritarios = {
     "026": [3], # Sleepingarea Tri - pisos 5
     "027": [3], # Sleepingarea normal - pisos 5
 
+}
+
+# =============================================================================
+# CATEGORÍAS DE MÓDULOS PARA REGLA DE DORMITORIOS
+# =============================================================================
+# Si una arka contiene un dormitorio, debe tener al menos 1 módulo de cada categoría esencial
+
+CATEGORIAS_MODULOS = {
+    "dormitorio": ["027", "026"],  # Módulos de dormitorio
+    "medicina": ["024","025"],           # Módulos de medicina
+    "bano": ["012", "013"],        # Módulos de baño/sanitarios
+    "cocina": ["022", "023"],      # Módulos de cocina/galley
+    "recreacion": ["005", "006"],  # Módulos de recreación
+    "storage": ["019", "018"]       # Módulos de almacenamiento
 }
 
 # =============================================================================
@@ -431,6 +449,7 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     Sistema de puntuación:
     - +10 puntos por cada prioridad satisfecha con módulos horizontalmente adyacentes
     - +15 puntos por estar en piso prioritario (si está definido)
+    - -5 puntos por cada piso inferior incompleto (incentiva completar de abajo hacia arriba)
     - +1 punto por cada espacio horizontalmente adyacente vacío (flexibilidad futura)
     
     IMPORTANTE: Solo considera módulos de IZQUIERDA y DERECHA
@@ -476,7 +495,20 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
         if piso in pisos_preferidos:
             score += 15  # +15 puntos por estar en piso prioritario
     
-    # PASO 3: Bonus por flexibilidad futura
+    # PASO 3: Bonus por completar pisos de abajo hacia arriba
+    # Verificar si hay pisos inferiores incompletos
+    pisos_inferiores_incompletos = 0
+    for piso_inferior in range(piso):
+        # Contar espacios vacíos en el piso inferior
+        espacios_vacios_piso = sum(1 for cara in range(4) if arka[piso_inferior][cara] is None)
+        if espacios_vacios_piso > 0:
+            pisos_inferiores_incompletos += 1
+    
+    # Penalizar si hay pisos inferiores incompletos
+    if pisos_inferiores_incompletos > 0:
+        score -= pisos_inferiores_incompletos * 5  # -5 puntos por cada piso inferior incompleto
+    
+    # PASO 4:  Bonus por flexibilidad futura
     # Contamos espacios horizontalmente adyacentes vacíos
     espacios_vacios = 0
     
@@ -702,6 +734,7 @@ def calcular_estadisticas(arkas: List[List[List]]):
     - Número total de arkas utilizadas
     - Porcentaje de eficiencia de uso del espacio
     - Posiciones ocupadas vs totales
+    - Estadísticas de reglas de dormitorios
     
     Args:
         arkas: Lista de arkas para analizar
