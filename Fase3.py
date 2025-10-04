@@ -213,7 +213,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
     
     return modulos_adicionales, posicion_base_anterior.tolist() if posicion_base_anterior is not None else None, posicion_base_actual.tolist()
 
-def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, isScientific=True):
+def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, terrain="moon", isScientific=True):
     """
     Genera el JSON SOLO con módulos 001, 011 y 004 (estructura vertical)
     
@@ -221,6 +221,7 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
         arkas_resultado: Lista de arkas resultado
         passengers: Número de pasajeros
         duration: Duración de la misión
+        terrain: Tipo de terreno ("moon", "mars", "asteroid")
         isScientific: Si es una misión científica
         
     Returns:
@@ -234,6 +235,7 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
         "parameters": {
             "passengers": passengers,
             "duration": duration,
+            "terrain": terrain,
             "isScientific": isScientific
         },
         "totalModules": len(modulos_adicionales),
@@ -259,7 +261,7 @@ if __name__ == "__main__":
     inventario = Fase1.calcular_modulos_arka(10, 30, True)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
     print(arkas_resultado)
-    json_result = generar_json_solo_001_011_004(arkas_resultado, P, T, TipoC)
+    json_result = generar_json_solo_001_011_004(arkas_resultado, P, T, "moon", TipoC)
     
     # Guardar en archivo
     with open('arkas_resultado.json', 'w', encoding='utf-8') as f:

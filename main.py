@@ -196,9 +196,10 @@ async def generate_layout(parameters: MissionParameters):
         P = parameters.passengers
         T = parameters.duration
         TipoC = parameters.isScientific
+        terrain = parameters.terrain
         inventario = Fase1.calcular_modulos_arka(P, T, TipoC)
         arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
-        json_result = Fase3.generar_json_solo_001_011_004(arkas_resultado, P, T, TipoC)
+        json_result = Fase3.generar_json_solo_001_011_004(arkas_resultado, P, T, terrain, TipoC)
         return json_result
     
         '''
