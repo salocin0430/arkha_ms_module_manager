@@ -316,35 +316,35 @@ def calcular_modulos_arka(P, T, TipoC):
         modulos_necesarios["027"] += 1
         
     total_modulos_sin_base = sum(modulos_necesarios.values())
-    print(total_modulos_sin_base)
     
+    total_modulos = total_modulos_sin_base
     # 1. Módulo BASE (001)
-    modulos_necesarios["001"] += math.ceil(total_modulos_sin_base/16)
+    total_modulos_sin_base += math.ceil(total_modulos_sin_base/16)
     
     # 3. Módulo POWERCORE (004)
-    modulos_necesarios["004"] += math.ceil(total_modulos_sin_base/16)
+    total_modulos_sin_base += math.ceil(total_modulos_sin_base/16)
     
     # 6. Módulo CIRCULACION (009)
-    modulos_necesarios["009"] += (math.ceil(total_modulos_sin_base/16))-1
+    total_modulos_sin_base += (math.ceil(total_modulos_sin_base/16))-1
         
     # 8. Módulos TRANSCORE (011)
-    modulos_necesarios["011"] += math.ceil(total_modulos_sin_base/4)
+    total_modulos_sin_base += math.ceil(total_modulos_sin_base/4)
 
     total_modulos = sum(modulos_necesarios.values())
     
-    return modulos_necesarios, total_modulos
+    return modulos_necesarios, total_modulos, total_modulos_sin_base
 
 # --- EJEMPLO DE USO ---
 if __name__ == "__main__":
     # --- PARÁMETROS DE ENTRADA DE LA MISIÓN ---
-    numero_de_pasajeros = 30
+    numero_de_pasajeros = 12
     tiempo_en_dias = 500
     # -------------------------------------------
 
     print(f"Calculando módulos para una misión con {numero_de_pasajeros} pasajeros y {tiempo_en_dias} días de duración...\n")
 
     # Ejecutar el algoritmo
-    resultado,total = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias, TipoC=True)
+    resultado,total,total_modulos_sin_base = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias, TipoC=True)
 
     # Imprimir los resultados de forma clara
     print("--- INVENTARIO DE MÓDULOS NECESARIOS PARA EL ARKA ---")
@@ -353,4 +353,5 @@ if __name__ == "__main__":
             nombre_modulo = MODULOS_INFO.get(codigo, "Desconocido")
             print(f"- Módulo {codigo} ({nombre_modulo}): {cantidad} unidad(es)")
     print("-----------------------------------------------------")
-    print(f"\n🔹 Total de módulos requeridos: {total}\n")
+    print(f"\n🔹 Total de módulos sin contar base, transcore, powercore y circulación: {total_modulos_sin_base}")
+    print(f"\n🔹 Total mínimo de módulos requeridos: {total}\n")
