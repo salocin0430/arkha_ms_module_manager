@@ -417,18 +417,21 @@ def cleaning_postresultado(arkas_resultado):
     """
     Método de limpieza post-resultado
     
-    Toma la lista de arkas resultado y devuelve la última arka
+    Realiza dos operaciones de limpieza:
+    1. Limpia las conexiones de la última arka según su dirección
+    2. Reemplaza todos los valores None (posiciones vacías) con módulo 006 (recreación)
     
     Args:
         arkas_resultado: Lista de arkas resultado
         
     Returns:
-        Dict: La última arka de la lista
+        List[Dict]: Lista de arkas con limpieza aplicada
     """
     if not arkas_resultado:
         print("No hay arkas en el resultado")
         return None
     
+    # PASO 1: Limpiar conexiones de la última arka
     ultima_arka = arkas_resultado[-1]
     direccion_actual = ultima_arka["direccion_actual"]
 
@@ -442,6 +445,22 @@ def cleaning_postresultado(arkas_resultado):
         ultima_arka["matriz"][1][1] = None
 
     arkas_resultado[-1] = ultima_arka
+    
+    # PASO 2: Barrida general - reemplazar todos los None con módulo 006 (recreación)
+    print("=== APLICANDO LIMPIEZA GENERAL ===")
+    espacios_rellenados = 0
+    
+    for arka_data in arkas_resultado:
+        matriz = arka_data["matriz"]
+        for piso in range(4):
+            for cara in range(4):
+                if matriz[piso][cara] is None:
+                    matriz[piso][cara] = "006"  # Módulo de recreación
+                    espacios_rellenados += 1
+                    print(f"Arka {arka_data['numero']}, Piso {piso+1}, Cara {cara+1}: Rellenado con módulo 006")
+    
+    print(f"Total de espacios rellenados con módulo 006: {espacios_rellenados}")
+    print("=== LIMPIEZA COMPLETADA ===")
     
     return arkas_resultado
 
