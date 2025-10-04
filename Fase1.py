@@ -315,9 +315,9 @@ def calcular_modulos_arka(P, T, TipoC):
     
     # 7. Módulo ACCESS (010)
     if T <= 600:
-        total_modulos_sin_base = math.ceil(P / 6)
+        total_modulos_sin_base += math.ceil(P / 6)
     else: 
-        total_modulos_sin_base = math.ceil(P / 6) * 2
+        total_modulos_sin_base += math.ceil(P / 6) * 2
     # 1. Módulo BASE (001)
     total_modulos_sin_base += math.ceil(total_modulos_sin_base/16)
     
@@ -353,5 +353,5 @@ if __name__ == "__main__":
             nombre_modulo = MODULOS_INFO.get(codigo, "Desconocido")
             print(f"- Módulo {codigo} ({nombre_modulo}): {cantidad} unidad(es)")
     print("-----------------------------------------------------")
-    print(f"\n🔹 Total de módulos sin contar base, transcore, powercore y circulación: {total_modulos_sin_base}")
-    print(f"\n🔹 Total mínimo de módulos requeridos: {total}\n")
+    print(f"\n🔹 Total de módulos sin contar base, transcore, powercore y circulación: {total}")
+    print(f"\n🔹 Total mínimo de módulos requeridos: {total_modulos_sin_base}\n")
