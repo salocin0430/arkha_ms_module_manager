@@ -227,7 +227,7 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
         dict: JSON solo con módulos 001, 011 y 004
     """
     # Obtener módulos adicionales (estructura vertical)
-    modulos_adicionales, pos_base_anterior, pos_base_actual = añadir_modulos_por_arka(arkas_resultado, P, T, TipoC)
+    modulos_adicionales, pos_base_anterior, pos_base_actual = añadir_modulos_por_arka(arkas_resultado, passengers, duration, isScientific)
     
     # Crear JSON final SOLO con módulos 001, 011 y 004
     json_result = {

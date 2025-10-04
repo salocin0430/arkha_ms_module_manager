@@ -192,6 +192,7 @@ async def generate_layout(parameters: MissionParameters):
     """
     try:
         # TODO: Aquí irá la lógica de Fase1.py y Fase2.py
+        
         P = parameters.passengers
         T = parameters.duration
         TipoC = parameters.isScientific
