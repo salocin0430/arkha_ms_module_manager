@@ -50,11 +50,7 @@ def calcular_modulos_arka(P, T, TipoC):
     modulos_necesarios = {f"{i:03d}": 0 for i in range(1, 28)}
 
     # --- REGLAS DE CÁLCULO ---
-
-    # 1. Módulo BASE (001)
-    # Uno por cada "011": "ARKHA_TransCore_L2_V1" en lvl 2
-    # -----------------------------------------------------------------   
-    
+   
     
     # 2. Módulos LABORATORY (002 (tri) y 003)
     # La lógica sigue la tabla de reglas para P y T.
@@ -101,10 +97,6 @@ def calcular_modulos_arka(P, T, TipoC):
                 modulos_necesarios["002"] += 4
 
 
-    # 3. Módulo POWERCORE (004)
-    # Uno por cada "001": "ARKHA_base_L1_V1",
-    # -----------------------------------------------------------------
-
     # 4. Módulos RECREATION (005 (tri) y 006)
     # La lógica sigue la tabla de reglas para P y T.
     Bloques_R = P // 12
@@ -146,21 +138,15 @@ def calcular_modulos_arka(P, T, TipoC):
     if Gu % 16 > 10:
         modulos_necesarios["007"] += 1
     elif Gu % 16 != 0:
-        modulos_necesarios["008"] = math.ceil(Gu % 16)
+        modulos_necesarios["008"] += 1
 
-
-    # 6. Módulo CIRCULACION (009)
-    # Como se indica en las reglas, la cantidad depende de la disposición final.
-    # Este algoritmo no puede determinarlo; se necesitaría un algoritmo de layout.
 
     # 7. Módulo ACCESS (010)
     if T <= 600:
         modulos_necesarios["010"] = math.ceil(P / 6)
     else: 
         modulos_necesarios["010"] = math.ceil(P / 6) * 2
-    
-    # 8. Módulos TRANSCORE (011)
-    # Uno por cada nivel > 1 and < n de cada base
+
     
     # 9. Módulos SANITARY (012 y 013(tri))
     
@@ -328,8 +314,25 @@ def calcular_modulos_arka(P, T, TipoC):
         modulos_necesarios["026"] += 1
     elif Resto_SLP in (3,4):
         modulos_necesarios["027"] += 1
+        
+    total_modulos_sin_base = sum(modulos_necesarios.values())
+    print(total_modulos_sin_base)
+    
+    # 1. Módulo BASE (001)
+    modulos_necesarios["001"] += math.ceil(total_modulos_sin_base/16)
+    
+    # 3. Módulo POWERCORE (004)
+    modulos_necesarios["004"] += math.ceil(total_modulos_sin_base/16)
+    
+    # 6. Módulo CIRCULACION (009)
+    modulos_necesarios["009"] += (math.ceil(total_modulos_sin_base/16))-1
+        
+    # 8. Módulos TRANSCORE (011)
+    modulos_necesarios["011"] += math.ceil(total_modulos_sin_base/4)
 
-    return modulos_necesarios
+    total_modulos = sum(modulos_necesarios.values())
+    
+    return modulos_necesarios, total_modulos
 
 # --- EJEMPLO DE USO ---
 if __name__ == "__main__":
@@ -341,7 +344,7 @@ if __name__ == "__main__":
     print(f"Calculando módulos para una misión con {numero_de_pasajeros} pasajeros y {tiempo_en_dias} días de duración...\n")
 
     # Ejecutar el algoritmo
-    resultado = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias, TipoC=True)
+    resultado,total = calcular_modulos_arka(numero_de_pasajeros, tiempo_en_dias, TipoC=True)
 
     # Imprimir los resultados de forma clara
     print("--- INVENTARIO DE MÓDULOS NECESARIOS PARA EL ARKA ---")
@@ -350,3 +353,4 @@ if __name__ == "__main__":
             nombre_modulo = MODULOS_INFO.get(codigo, "Desconocido")
             print(f"- Módulo {codigo} ({nombre_modulo}): {cantidad} unidad(es)")
     print("-----------------------------------------------------")
+    print(f"\n🔹 Total de módulos requeridos: {total}\n")
