@@ -1,20 +1,14 @@
-version: '3.8'
-
 services:
   arkha-module-manager:
     build: .
-    container_name: arkha_module_manager
     ports:
-      - "8000:8000"
+      - "8001:8001"
     environment:
       - PYTHONUNBUFFERED=1
-    volumes:
-      - ./main.py:/app/main.py
-      - ./Fase1.py:/app/Fase1.py
-      - ./Fase2.py:/app/Fase2.py
+      - PORT=8001
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 30s
       timeout: 10s
       retries: 3
