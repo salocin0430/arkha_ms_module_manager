@@ -430,13 +430,20 @@ def cleaning_postresultado(arkas_resultado):
         return None
     
     ultima_arka = arkas_resultado[-1]
+    direccion_actual = ultima_arka["direccion_actual"]
+
+    if direccion_actual == "ARRIBA":
+        ultima_arka["matriz"][1][2] = None
+    if direccion_actual == "IZQ":
+        ultima_arka["matriz"][1][3] = None
+    if direccion_actual == "ABAJO":
+        ultima_arka["matriz"][1][0] = None
+    if direccion_actual == "DER":
+        ultima_arka["matriz"][1][1] = None
+
+    arkas_resultado[-1] = ultima_arka
     
-    
-    
-    
-    
-    
-    return ultima_arka
+    return arkas_resultado
 
 def direccion(n):
     if n < 1:
@@ -772,6 +779,7 @@ def colocar_inventario_completo(inventario: Dict[str, int]) -> List[Dict]:
     
     print(f"\n=== COLOCACIÓN COMPLETADA ===")
     print(f"Total de arkas utilizadas: {len(arkas)}")
+    arkas = cleaning_postresultado(arkas)
     return arkas
 
 def visualizar_arkas(arkas: List[Dict]):
@@ -857,11 +865,13 @@ if __name__ == "__main__":
     # PASO 1: Colocar todos los módulos usando el algoritmo inteligente
     arkas_resultado = colocar_inventario_completo(inventario[0])
     
+
+    
+    
+    
     print("===========================================")
     print(arkas_resultado)
     print("===========================================")
-    
-    
     
     # PASO 2: Visualizar el resultado en formato legible
     visualizar_arkas(arkas_resultado)
