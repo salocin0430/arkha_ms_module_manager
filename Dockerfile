@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # Variables de entorno para optimización
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PORT=8000
+    PORT=8001
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -26,12 +26,12 @@ COPY Fase1.py .
 COPY Fase2.py .
 
 # Exponer puerto (Coolify lo detectará automáticamente)
-EXPOSE 8000
+EXPOSE 8001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+    CMD curl -f http://localhost:8001/health || exit 1
 
 # Comando para ejecutar la aplicación
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]
 
