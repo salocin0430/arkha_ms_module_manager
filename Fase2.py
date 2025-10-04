@@ -22,6 +22,8 @@ SISTEMA DE SCORING:
 - +10 puntos por cada prioridad satisfecha con módulos horizontalmente adyacentes
 - +15 puntos por estar en piso prioritario (si está definido)
 - -5 puntos por cada piso inferior incompleto (incentiva completar de abajo hacia arriba)
+- +30 puntos por módulos de conexión (014-023)
+- +20 puntos por módulo de conexión de emergencia (009)
 - +1 punto por cada espacio horizontalmente adyacente vacío (flexibilidad futura)
 
 AUTOR: Sistema de Gestión de Módulos ARKHA
@@ -225,6 +227,14 @@ CATEGORIAS_MODULOS = {
 }
 
 # =============================================================================
+# MÓDULOS DE CONEXIÓN ENTRE ARKAS
+# =============================================================================
+# Módulos que permiten la conexión entre arkas
+
+MODULOS_CONEXION = ["014", "015", "016", "017", "018", "019", "020", "021", "022", "023"]
+MODULO_CONEXION_EMERGENCIA = "009"  # Módulo que se puede añadir siempre que se necesite
+
+# =============================================================================
 # SISTEMA DE PRIORIDADES DE COLOCACIÓN
 # =============================================================================
 # Estas son las reglas que FAVORECEN ciertas combinaciones de módulos.
@@ -380,6 +390,58 @@ def nueva_arka():
     """
     return [[None for _ in range(4)] for _ in range(4)]
 
+def tiene_modulo_conexion(arka: List[List]) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """
+    Verifica si una arka tiene módulos de conexión disponibles
+    
+    Args:
+        arka: La arka a verificar
+        
+    Returns:
+        Tuple[bool, Optional[Tuple[int, int]]]: (tiene_conexion, posicion_conexion)
+        - tiene_conexion: True si tiene módulo de conexión
+        - posicion_conexion: (piso, cara) del módulo de conexión, o None
+    """
+    for piso in range(4):
+        for cara in range(4):
+            if arka[piso][cara] in MODULOS_CONEXION or arka[piso][cara] == MODULO_CONEXION_EMERGENCIA:
+                return True, (piso, cara)
+    return False, None
+
+def necesita_otra_arka(inventario_restante: Dict[str, int]) -> bool:
+    """
+    Determina si se necesitará crear otra arka basándose en los módulos restantes
+    
+    Args:
+        inventario_restante: Diccionario con módulos restantes por colocar
+        
+    Returns:
+        bool: True si se necesitará otra arka (más de 16 módulos restantes)
+    """
+    total_modulos_restantes = sum(inventario_restante.values())
+    return total_modulos_restantes > 16
+
+def encontrar_mejor_posicion_conexion(arka: List[List], piso_original: int, cara_original: int) -> Tuple[int, int]:
+    """
+    Encuentra la mejor posición para colocar un módulo de conexión en una nueva arka
+    
+    La posición DEBE estar en el MISMO PISO y en la cara +2 de donde está el módulo de conexión en la arka original
+    
+    Args:
+        arka: La arka donde buscar la mejor posición
+        piso_original: Piso donde está el módulo de conexión en la arka original
+        cara_original: Cara donde está el módulo de conexión en la arka original
+        
+    Returns:
+        Tuple[int, int]: (piso, cara) de la mejor posición
+    """
+    # Calcular cara de conexión (cara + 2, considerando que son cilindros)
+    nueva_cara = (cara_original + 2) % 4
+    
+    # SIEMPRE debe estar en el mismo piso y cara +2
+    # Si la posición está ocupada, forzar la colocación (sobrescribir)
+    return piso_original, nueva_cara
+
 def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     """
     Verifica si es válido colocar un módulo en una posición específica
@@ -404,6 +466,11 @@ def es_valida(arka: List[List], piso: int, cara: int, modulo_id: str) -> bool:
     """
     # PASO 1: Verificar que la posición esté vacía
     if arka[piso][cara] is not None:
+        return False
+    
+    # PASO 1.5: Verificar que no sea una posición de conexión protegida
+    # Las posiciones de conexión no pueden ser sobrescritas
+    if arka[piso][cara] == MODULO_CONEXION_EMERGENCIA:
         return False
     
     # PASO 2: Verificar restricciones SOLO con módulos horizontalmente adyacentes
@@ -450,6 +517,8 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     - +10 puntos por cada prioridad satisfecha con módulos horizontalmente adyacentes
     - +15 puntos por estar en piso prioritario (si está definido)
     - -5 puntos por cada piso inferior incompleto (incentiva completar de abajo hacia arriba)
+    - +30 puntos por módulos de conexión (014-023)
+    - +20 puntos por módulo de conexión de emergencia (009)
     - +1 punto por cada espacio horizontalmente adyacente vacío (flexibilidad futura)
     
     IMPORTANTE: Solo considera módulos de IZQUIERDA y DERECHA
@@ -508,7 +577,14 @@ def calcular_score(arka: List[List], piso: int, cara: int, modulo_id: str) -> in
     if pisos_inferiores_incompletos > 0:
         score -= pisos_inferiores_incompletos * 5  # -5 puntos por cada piso inferior incompleto
     
-    # PASO 4:  Bonus por flexibilidad futura
+    # PASO 4: Bonus por módulos de conexión
+    # Los módulos de conexión son importantes para la conectividad entre arkas
+    if modulo_id in MODULOS_CONEXION:
+        score += 30  # +30 puntos por módulos de conexión (014-023)
+    elif modulo_id == MODULO_CONEXION_EMERGENCIA:
+        score += 20  # +20 puntos por módulo de conexión de emergencia (009)
+    
+    # PASO 5:  Bonus por flexibilidad futura
     # Contamos espacios horizontalmente adyacentes vacíos
     espacios_vacios = 0
     
@@ -562,7 +638,8 @@ def encontrar_mejor_posicion(arka: List[List], modulo_id: str) -> Tuple[int, int
     
     return mejor_posicion  # Retornamos la mejor posición encontrada
 
-def agregar_modulo(arkas: List[List], modulo_id: str) -> bool:
+
+def agregar_modulo(arkas: List[List], modulo_id: str, inventario_restante: Dict[str, int] = None) -> bool:
     """
     Intenta agregar un módulo a las arkas existentes o crear una nueva
     
@@ -589,9 +666,59 @@ def agregar_modulo(arkas: List[List], modulo_id: str) -> bool:
             print(f"Módulo {modulo_id} colocado en Arka {i+1}, Piso {piso+1}, Cara {cara+1} (Score: {score})")
             return True  # Éxito: módulo colocado
     
-    # ESTRATEGIA 2: Si no se pudo colocar en arkas existentes, crear nueva arka
-    # Esto garantiza que siempre podamos colocar el módulo
+    # ESTRATEGIA 2: Crear nueva arka y conectar con la anterior
+    
+    # Crear nueva arka
     nueva_arka_instancia = nueva_arka()  # Creamos arka vacía
+    
+    # Si hay arkas existentes, conectar la nueva arka con la anterior
+    if len(arkas) > 0:
+        ultima_arka = arkas[-1]
+        tiene_conexion, posicion_conexion = tiene_modulo_conexion(ultima_arka)
+        
+        if tiene_conexion and posicion_conexion is not None:
+            piso_conexion, cara_conexion = posicion_conexion
+            # Calcular posición de conexión en la nueva arka (mismo piso, cara +2)
+            piso_nuevo = piso_conexion
+            cara_nueva = (cara_conexion + 2) % 4
+            
+            # Colocar módulo de conexión en la nueva arka
+            nueva_arka_instancia[piso_nuevo][cara_nueva] = MODULO_CONEXION_EMERGENCIA
+            print(f"Módulo de conexión {MODULO_CONEXION_EMERGENCIA} colocado en nueva Arka, Piso {piso_nuevo+1}, Cara {cara_nueva+1} (conectando con Arka {len(arkas)} Piso {piso_conexion+1}, Cara {cara_conexion+1})")
+        else:
+            # Si no hay módulo de conexión en la arka anterior, añadir uno
+            if inventario_restante and necesita_otra_arka(inventario_restante):
+                # Buscar primera posición vacía en la última arka
+                for piso in range(4):
+                    for cara in range(4):
+                        if ultima_arka[piso][cara] is None:
+                            ultima_arka[piso][cara] = MODULO_CONEXION_EMERGENCIA
+                            print(f"Módulo de conexión de emergencia {MODULO_CONEXION_EMERGENCIA} añadido a Arka {len(arkas)}, Piso {piso+1}, Cara {cara+1}")
+                            
+                            # Ahora colocar el módulo de conexión en la nueva arka
+                            piso_nuevo = piso
+                            cara_nueva = (cara + 2) % 4
+                            nueva_arka_instancia[piso_nuevo][cara_nueva] = MODULO_CONEXION_EMERGENCIA
+                            print(f"Módulo de conexión {MODULO_CONEXION_EMERGENCIA} colocado en nueva Arka, Piso {piso_nuevo+1}, Cara {cara_nueva+1} (conectando con Arka {len(arkas)} Piso {piso+1}, Cara {cara+1})")
+                            break
+                    if ultima_arka[piso][cara] == MODULO_CONEXION_EMERGENCIA:
+                        break
+            else:
+                # Si no se necesita otra arka, pero hay arkas existentes, conectar de todas formas
+                # Buscar cualquier módulo de conexión en la última arka
+                for piso in range(4):
+                    for cara in range(4):
+                        if ultima_arka[piso][cara] in MODULOS_CONEXION or ultima_arka[piso][cara] == MODULO_CONEXION_EMERGENCIA:
+                            # Conectar con este módulo
+                            piso_nuevo = piso
+                            cara_nueva = (cara + 2) % 4
+                            nueva_arka_instancia[piso_nuevo][cara_nueva] = MODULO_CONEXION_EMERGENCIA
+                            print(f"Módulo de conexión {MODULO_CONEXION_EMERGENCIA} colocado en nueva Arka, Piso {piso_nuevo+1}, Cara {cara_nueva+1} (conectando con Arka {len(arkas)} Piso {piso+1}, Cara {cara+1})")
+                            break
+                    if nueva_arka_instancia[piso][cara_nueva] == MODULO_CONEXION_EMERGENCIA:
+                        break
+    
+    # Colocar el módulo principal en la nueva arka
     posicion = encontrar_mejor_posicion(nueva_arka_instancia, modulo_id)
     
     if posicion is not None:  # Debería ser siempre válido en arka vacía
@@ -672,7 +799,18 @@ def colocar_inventario_completo(inventario: Dict[str, int]) -> List[List[List]]:
         
         # Colocamos cada instancia del módulo
         for _ in range(cantidad):
-            if not agregar_modulo(arkas, modulo_id):
+            # Calcular inventario restante para determinar si se necesitará otra arka
+            inventario_restante = {}
+            for mod_id, cant in inventario.items():
+                if mod_id == modulo_id:
+                    inventario_restante[mod_id] = cant - 1
+                else:
+                    inventario_restante[mod_id] = cant
+            
+            # Actualizar inventario
+            inventario[modulo_id] -= 1
+            
+            if not agregar_modulo(arkas, modulo_id, inventario_restante):
                 print(f"ERROR: No se pudo colocar el módulo {modulo_id}")
                 return arkas  # Si hay error, retornamos lo que tengamos
     
@@ -726,6 +864,64 @@ def visualizar_arkas(arkas: List[List[List]]):
             print(f"Piso {piso+1}: {modulos_piso}")
         print()
 
+def imprimir_conexiones_arkas(arkas: List[List[List]]):
+    """
+    Imprime los puntos de conexión entre cada par de arkas
+    
+    Args:
+        arkas: Lista de arkas para analizar
+    """
+    print(f"\n=== CONEXIONES ENTRE ARKAS ===")
+    
+    for i in range(len(arkas) - 1):
+        arka_actual = arkas[i]
+        arka_siguiente = arkas[i + 1]
+        
+        # Buscar módulo de conexión en arka actual (el que se usó para conectar)
+        conexion_actual = None
+        for piso in range(4):
+            for cara in range(4):
+                if arka_actual[piso][cara] in MODULOS_CONEXION or arka_actual[piso][cara] == MODULO_CONEXION_EMERGENCIA:
+                    conexion_actual = (piso, cara)
+                    break
+            if conexion_actual:
+                break
+        
+        # Buscar módulo de conexión en arka siguiente (el que debería estar en cara +2)
+        conexion_siguiente = None
+        if conexion_actual:
+            piso_original, cara_original = conexion_actual
+            cara_esperada = (cara_original + 2) % 4
+            
+            # Buscar específicamente en la cara esperada del mismo piso
+            if arka_siguiente[piso_original][cara_esperada] in MODULOS_CONEXION or arka_siguiente[piso_original][cara_esperada] == MODULO_CONEXION_EMERGENCIA:
+                conexion_siguiente = (piso_original, cara_esperada)
+            else:
+                # Si no está en la posición correcta, buscar cualquier módulo de conexión
+                for piso in range(4):
+                    for cara in range(4):
+                        if arka_siguiente[piso][cara] in MODULOS_CONEXION or arka_siguiente[piso][cara] == MODULO_CONEXION_EMERGENCIA:
+                            conexion_siguiente = (piso, cara)
+                            break
+                    if conexion_siguiente:
+                        break
+        
+        if conexion_actual and conexion_siguiente:
+            piso_actual, cara_actual = conexion_actual
+            piso_siguiente, cara_siguiente = conexion_siguiente
+            
+            # Verificar si la conexión es correcta (mismo piso y cara +2)
+            cara_esperada = (cara_actual + 2) % 4
+            conexion_correcta = (piso_actual == piso_siguiente) and (cara_siguiente == cara_esperada)
+            
+            status = "✓" if conexion_correcta else "✗"
+            print(f"Arka{i+1}: Piso{piso_actual+1}Cara{cara_actual+1} con Arka{i+2}: Piso{piso_siguiente+1}Cara{cara_siguiente+1} {status}")
+            
+            if not conexion_correcta:
+                print(f"  → Debería ser: Piso{piso_actual+1}Cara{cara_esperada+1}")
+        else:
+            print(f"Arka{i+1}: Sin conexión con Arka{i+2}")
+
 def calcular_estadisticas(arkas: List[List[List]]):
     """
     Calcula estadísticas de la colocación
@@ -763,5 +959,8 @@ if __name__ == "__main__":
     # PASO 2: Visualizar el resultado en formato legible
     visualizar_arkas(arkas_resultado)
     
-    # PASO 3: Mostrar estadísticas de eficiencia
+    # PASO 3: Mostrar conexiones entre arkas
+    imprimir_conexiones_arkas(arkas_resultado)
+    
+    # PASO 4: Mostrar estadísticas de eficiencia
     calcular_estadisticas(arkas_resultado)
