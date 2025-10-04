@@ -259,7 +259,6 @@ if __name__ == "__main__":
     inventario = Fase1.calcular_modulos_arka(10, 30, True)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
     print(arkas_resultado)
-    # Generar JSON SOLO con módulos 001, 011 y 004
     json_result = generar_json_solo_001_011_004(arkas_resultado, P, T, TipoC)
     
     # Guardar en archivo

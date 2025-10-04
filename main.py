@@ -20,6 +20,9 @@ from pydantic import BaseModel, Field
 from typing import List, Literal, Optional
 from datetime import datetime
 import uvicorn
+import Fase1
+import Fase2
+import Fase3
 
 # =============================================================================
 # CONFIGURACIÓN DE LA APLICACIÓN
@@ -189,90 +192,15 @@ async def generate_layout(parameters: MissionParameters):
     """
     try:
         # TODO: Aquí irá la lógica de Fase1.py y Fase2.py
-        # Por ahora retornamos un layout de ejemplo
-        
-        # Ejemplo de respuesta (será reemplazado por el algoritmo real)
-        example_modules = [
-            ModuleLayout(
-                id="access_core_l1_v1",
-                position=[0, 0, 0],
-                rotation=[0, 0, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="powercore_l1_v1",
-                position=[5, 0, 0],
-                rotation=[0, 1.5708, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l2_sleepwardbay_v1",
-                position=[-5, 0, 0],
-                rotation=[0, -1.5708, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l2_storagebay_v1",
-                position=[0, 0, 5],
-                rotation=[0, 3.14159, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="lab_l2_v1",
-                position=[0, 0, -5],
-                rotation=[0, 0, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l2_systemsbay_v1",
-                position=[5, 0, 5],
-                rotation=[0, 2.35619, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="huerta_l1_v1",
-                position=[-5, 0, 5],
-                rotation=[0, -2.35619, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l3_medbay_v1",
-                position=[5, 0, -5],
-                rotation=[0, 0.785398, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="circulacion_l1_v1",
-                position=[-5, 0, -5],
-                rotation=[0, -0.785398, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="access_core_l1_v1",
-                position=[10, 0, 0],
-                rotation=[0, 0, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="powercore_l1_v1",
-                position=[0, 3.10, 0],
-                rotation=[0, 0, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l2_sleepwardbay_v1",
-                position=[5, 3.10, 0],
-                rotation=[0, 1.5708, 0],
-                scale=[1, 1, 1]
-            ),
-            ModuleLayout(
-                id="l2_storagebay_v1",
-                position=[-5, 3.10, 0],
-                rotation=[0, -1.5708, 0],
-                scale=[1, 1, 1]
-            )
-        ]
-        
+        P = parameters.passengers
+        T = parameters.duration
+        TipoC = parameters.isScientific
+        inventario = Fase1.calcular_modulos_arka(P, T, TipoC)
+        arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])
+        json_result = Fase3.generar_json_solo_001_011_004(arkas_resultado, P, T, TipoC)
+        return json_result
+    
+        '''
         response = MissionLayoutResponse(
             parameters=parameters,
             totalModules=len(example_modules),
@@ -286,7 +214,7 @@ async def generate_layout(parameters: MissionParameters):
         )
         
         return response
-        
+        '''
     except Exception as e:
         raise HTTPException(
             status_code=500,
