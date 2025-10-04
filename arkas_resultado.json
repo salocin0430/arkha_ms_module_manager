@@ -1,0 +1,675 @@
+{
+  "parameters": {
+    "passengers": 30,
+    "duration": 500,
+    "isScientific": true
+  },
+  "totalModules": 36,
+  "modules": [
+    {
+      "id": "base_l1_v1",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        3.1,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        6.2,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        9.3,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        12.4,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        0.0,
+        15.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base_l1_v1",
+      "position": [
+        0.0,
+        0.0,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        3.1,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        6.2,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        9.3,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        12.4,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        0.0,
+        15.5,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base_l1_v1",
+      "position": [
+        14.4,
+        0.0,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        3.1,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        6.2,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        9.3,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        12.4,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        14.4,
+        15.5,
+        14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base_l1_v1",
+      "position": [
+        14.4,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        3.1,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        6.2,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        9.3,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        12.4,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        14.4,
+        15.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base_l1_v1",
+      "position": [
+        14.4,
+        0.0,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        3.1,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        6.2,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        9.3,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        14.4,
+        12.4,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        14.4,
+        15.5,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base_l1_v1",
+      "position": [
+        0.0,
+        0.0,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        3.1,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        6.2,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        9.3,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transcore_l2_v1",
+      "position": [
+        0.0,
+        12.4,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "powercore_l1_v1",
+      "position": [
+        0.0,
+        15.5,
+        -14.4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2025-10-04T19:54:57.808627Z",
+    "algorithmVersion": "v3.0.0",
+    "estimatedCost": 126000,
+    "currency": "ARKHA",
+    "totalArkas": 6,
+    "posicionBaseAnterior": [
+      0.0,
+      0.0,
+      -14.4
+    ],
+    "posicionBaseActual": [
+      0.0,
+      0.0,
+      -14.4
+    ]
+  }
+}
