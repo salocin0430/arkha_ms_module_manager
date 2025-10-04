@@ -210,19 +210,7 @@ pisos_prioritarios = {
 
 }
 
-# =============================================================================
-# CATEGORÍAS DE MÓDULOS PARA REGLA DE DORMITORIOS
-# =============================================================================
-# Si una arka contiene un dormitorio, debe tener al menos 1 módulo de cada categoría esencial
 
-CATEGORIAS_MODULOS = {
-    "dormitorio": ["027", "026"],  # Módulos de dormitorio
-    "medicina": ["024","025"],           # Módulos de medicina
-    "bano": ["012", "013"],        # Módulos de baño/sanitarios
-    "cocina": ["022", "023"],      # Módulos de cocina/galley
-    "recreacion": ["005", "006"],  # Módulos de recreación
-    "storage": ["019", "018"]       # Módulos de almacenamiento
-}
 
 # =============================================================================
 # SISTEMA DE PRIORIDADES DE COLOCACIÓN
