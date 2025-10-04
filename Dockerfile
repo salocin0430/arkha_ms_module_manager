@@ -1,23 +1,37 @@
 # Usar imagen oficial de Python 3.11
 FROM python:3.11-slim
 
-# Establecer el directorio de trabajo en el contenedor
+# Variables de entorno para optimización
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000
+
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar el archivo de requisitos
+# Instalar curl para healthcheck
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements y instalar dependencias
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Instalar las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar el código de la aplicación
+# Copiar código de la aplicación
 COPY main.py .
 COPY Fase1.py .
 COPY Fase2.py .
 
-# Exponer el puerto 8000
+# Exponer puerto (Coolify lo detectará automáticamente)
 EXPOSE 8000
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
 # Comando para ejecutar la aplicación
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
 
