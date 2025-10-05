@@ -133,7 +133,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             modulos_adicionales.append(modulo_011)
         
         # 1 módulo 004 (techo) - en la parte superior de la torre
-        posicion_techo = posicion_base_actual + np.array([0, 5 * constantes["altura_modulo"], 0])
+        posicion_techo = posicion_base_actual + np.array([0, (arka["pisos"] + 1) * constantes["altura_modulo"], 0])
         modulo_004 = {
             "id": id_a_modulo("004"),
             "position": posicion_techo.tolist(),  # 5 niveles de altura (base + 4 torre + techo)
