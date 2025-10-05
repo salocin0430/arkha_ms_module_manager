@@ -8,7 +8,7 @@ constantes = {
     "altura_modulo": 3.1,
     "ancho_modelo": 3.5,
     "ancho_centro": 2.6,
-    "ancho_circ": 4.2,
+    "ancho_circ": 4,
     "x": "horizontal",
     "y": "vertical",
     "z": "profundidad",
