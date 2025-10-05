@@ -159,7 +159,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 
             piso_cara_A = {
                 "id": id_a_modulo(arka["matriz"][piso][0]),
-                "position": [centro_piso[0], centro_piso[1], centro_piso[2] - ancho_especial/2 - constantes["ancho_centro"]/2],
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] - ancho_especial/2 - constantes["ancho_modelo"]/2],
                 "rotation": constantes["0_grados"],
                 "scale": [1, 1, 1]
             }
@@ -174,7 +174,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             
             piso_cara_B = {
                 "id": id_a_modulo(arka["matriz"][piso][1]),
-                "position": [centro_piso[0] - ancho_especial/2 - constantes["ancho_centro"]/2, centro_piso[1], centro_piso[2]],
+                "position": [centro_piso[0] - ancho_especial/2 - constantes["ancho_modelo"]/2, centro_piso[1], centro_piso[2]],
                 "rotation": constantes["90_grados_derecha"],
                 "scale": [1, 1, 1]
             }
@@ -189,7 +189,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             
             piso_cara_C = {
                 "id": id_a_modulo(arka["matriz"][piso][2]),
-                "position": [centro_piso[0], centro_piso[1], centro_piso[2] + ancho_especial/2 + constantes["ancho_centro"]/2],
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] + ancho_especial/2 + constantes["ancho_modelo"]/2],
                 "rotation": constantes["180_grados"],
                 "scale": [1, 1, 1]
             }
@@ -204,7 +204,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             
             piso_cara_D = {
                 "id": id_a_modulo(arka["matriz"][piso][3]),
-                "position": [centro_piso[0] + ancho_especial/2 + constantes["ancho_centro"]/2, centro_piso[1], centro_piso[2]],
+                "position": [centro_piso[0] + ancho_especial/2 + constantes["ancho_modelo"]/2, centro_piso[1], centro_piso[2]],
                 "rotation": constantes["270_grados_derecha"],
                 "scale": [1, 1, 1]
             }
