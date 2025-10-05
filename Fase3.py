@@ -122,7 +122,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             modulos_adicionales.append(modulo_010)
         
         # 4 módulos 011 (torre vertical) - uno encima del otro
-        for nivel in range(4):
+        for nivel in range(arka["pisos"]):
             posicion_torre = posicion_base_actual + np.array([0, (nivel + 1) * constantes["altura_modulo"], 0])
             modulo_011 = {
                 "id": id_a_modulo("011"),
@@ -143,7 +143,7 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
         modulos_adicionales.append(modulo_004)
         
         #Arkas por piso
-        for piso in range(4):
+        for piso in range(arka["pisos"]):
             
             print(f"Arka {numero_arka} - Piso {piso+1} - Es última: {es_ultima_arka}")          
             
@@ -255,8 +255,8 @@ def generar_json_solo_001_011_004(arkas_resultado, passengers=30, duration=500, 
 
 # Ejecutar el proceso
 if __name__ == "__main__":
-    P = 10
-    T = 90
+    P = 30
+    T = 500
     TipoC = False
     inventario = Fase1.calcular_modulos_arka(P, T, False)
     arkas_resultado = Fase2.colocar_inventario_completo(inventario[0])

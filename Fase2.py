@@ -336,6 +336,13 @@ prioridades = [
     ("019", "024"),  # StorageBay Tri hacia MedBay normal
 ]
 
+pisos_arka = {
+    "1":4,
+    "2":3,
+    "3":3,
+    "4":2,
+    "0":4,
+}
 
 print(inventario)
 
@@ -377,6 +384,7 @@ def nueva_arka():
     contador_arkas += 1
     numero_arka = contador_arkas
     
+    pisos = pisos_arka[str(numero_arka%5)]
     # Obtener direcciones
     direccion_actual = direccion(numero_arka)
     direccion_anterior = None
@@ -384,7 +392,7 @@ def nueva_arka():
         direccion_anterior = direccion(numero_arka - 1)
     
     # Crear matriz vacía
-    arka = [[None for _ in range(4)] for _ in range(4)]
+    arka = [[None for _ in range(4)] for _ in range(pisos)]
     
     # RESERVAR MÓDULOS SEGÚN DIRECCIÓN ACTUAL
     if direccion_actual == "ARRIBA":
@@ -410,7 +418,8 @@ def nueva_arka():
         "numero": numero_arka,
         "matriz": arka,
         "direccion_actual": direccion_actual,
-        "direccion_anterior": direccion_anterior
+        "direccion_anterior": direccion_anterior,
+        "pisos": pisos
     }
 
 def cleaning_postresultado(arkas_resultado):
@@ -452,7 +461,7 @@ def cleaning_postresultado(arkas_resultado):
     
     for arka_data in arkas_resultado:
         matriz = arka_data["matriz"]
-        for piso in range(4):
+        for piso in range(arka_data["pisos"]):
             for cara in range(4):
                 if matriz[piso][cara] is None:
                     matriz[piso][cara] = "006"  # Módulo de recreación
@@ -668,7 +677,7 @@ def encontrar_mejor_posicion(arka_data, modulo_id: str) -> Tuple[int, int, int]:
     mejor_posicion = None
     
     # Recorremos TODAS las posiciones de la arka (4x4)
-    for piso in range(4):
+    for piso in range(arka_data["pisos"]):
         for cara in range(4):
             # Solo evaluamos posiciones válidas (que cumplan restricciones)
             if es_valida(arka_data, piso, cara, modulo_id):
@@ -829,7 +838,7 @@ def visualizar_arkas(arkas: List[Dict]):
         
         # VISUALIZACIÓN 1: Con números
         print("Números:")
-        for piso in range(4):
+        for piso in range(arka_data["pisos"]):
             modulos_piso = []
             for cara in range(4):
                 if matriz[piso][cara] is not None:
@@ -842,7 +851,7 @@ def visualizar_arkas(arkas: List[Dict]):
         
         # VISUALIZACIÓN 2: Con nombres completos
         print("Nombres:")
-        for piso in range(4):
+        for piso in range(arka_data["pisos"]):
             modulos_piso = []
             for cara in range(4):
                 if matriz[piso][cara] is not None:
@@ -867,7 +876,7 @@ def calcular_estadisticas(arkas: List[Dict]):
     Args:
         arkas: Lista de arkas para analizar
     """
-    total_posiciones = len(arkas) * 16  # 16 posiciones por arka (4x4)
+    total_posiciones = sum(arka_data["pisos"] * 4 for arka_data in arkas)
     posiciones_ocupadas = sum(1 for arka_data in arkas for piso in arka_data["matriz"] for cara in piso if cara is not None)
     eficiencia = (posiciones_ocupadas / total_posiciones) * 100 if total_posiciones > 0 else 0
     
