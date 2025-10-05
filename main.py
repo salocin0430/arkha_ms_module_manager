@@ -51,7 +51,7 @@ app.add_middleware(
 
 class MissionParameters(BaseModel):
     """Parámetros de entrada para generar el layout de la misión"""
-    passengers: int = Field(..., ge=1, le=100, description="Número de pasajeros (1-100)")
+    passengers: int = Field(..., ge=1, le=300, description="Número de pasajeros (1-300)")
     duration: int = Field(..., ge=1, le=3650, description="Duración de la misión en días (1-3650)")
     terrain: Literal["moon", "mars", "asteroid"] = Field(..., description="Tipo de terreno donde se desplegará")
     isScientific: bool = Field(default=False, description="Indica si es una misión científica")
