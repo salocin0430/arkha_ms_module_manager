@@ -4,15 +4,15 @@ import math
 # Un diccionario que mapea el código del módulo a su nombre para una salida más clara.
 MODULOS_INFO = {
     "001": "base_l1_v1",
-    "002": "labtri_l2_v1",
+    "002": "lab_tri_l2_v1",
     "003": "lab_l2_v1",
     "004": "powercore_l1_v1",
-    "005": "recreaciontri_l1_v1",
+    "005": "recreacion_tri_l1_v1",
     "006": "recreacion_l1_v1",
     "007": "huertatri_l1_v1",
     "008": "huerta_l1_v1",
     "009": "circulacion_l1_v1",
-    "010": "accesscore_l1_v1",
+    "010": "access_core_l1_v1",
     "011": "transcore_l2_v1",
     "012": "sanitarybay_l2_v1",
     "013": "sanitarybaytri_l2_v1",

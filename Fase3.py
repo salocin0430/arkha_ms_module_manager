@@ -30,15 +30,15 @@ def id_a_modulo(modulo_id):
     # Mapeo de IDs a nombres de archivo
     mapeo_modulos = {
     "001": "base_l1_v1",
-    "002": "labtri_l2_v1",
+    "002": "lab_tri_l2_v1",
     "003": "lab_l2_v1",
     "004": "powercore_l1_v1",
-    "005": "recreaciontri_l1_v1",
+    "005": "recreacion_tri_l1_v1",
     "006": "recreacion_l1_v1",
     "007": "huertatri_l1_v1",
     "008": "huerta_l1_v1",
     "009": "circulacion_l1_v1",
-    "010": "accesscore_l1_v1",
+    "010": "access_core_l1_v1",
     "011": "transcore_l2_v1",
     "012": "sanitarybay_l2_v1",
     "013": "sanitarybaytri_l2_v1",
@@ -112,7 +112,9 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
         modulos_adicionales.append(modulo_001)
         
         # 1 módulo 010 (access core) - en el centro de la arka
-        if number_of_access_core <= i:
+        print(number_of_access_core)
+        print(i)
+        if number_of_access_core >= i:
             modulo_010 = {
                 "id": id_a_modulo("010"),
                 "position": posicion_base_actual.tolist(),
@@ -160,8 +162,8 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             
             piso_cara_B = {
                 "id": id_a_modulo(arka["matriz"][piso][1]),
-                "position": [centro_piso[0] + constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
-                "rotation": constantes["270_grados_derecha"],
+                "position": [centro_piso[0] - constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                "rotation": constantes["90_grados_derecha"],
                 "scale": [1, 1, 1]
             }
             
@@ -180,8 +182,8 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 
             piso_cara_D = {
                 "id": id_a_modulo(arka["matriz"][piso][3]),
-                "position": [centro_piso[0] - constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
-                "rotation": constantes["90_grados_derecha"],
+                "position": [centro_piso[0] + constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                "rotation": constantes["270_grados_derecha"],
                 "scale": [1, 1, 1]
             }
             if arka["matriz"][piso][3] is not None:
