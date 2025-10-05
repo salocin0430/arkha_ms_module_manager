@@ -112,9 +112,9 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
         modulos_adicionales.append(modulo_001)
         
         # 1 módulo 010 (access core) - en el centro de la arka
-        print(number_of_access_core)
+        print(number_of_access_core-1)
         print(i)
-        if number_of_access_core >= i:
+        if number_of_access_core-1 >= i:
             modulo_010 = {
                 "id": id_a_modulo("010"),
                 "position": posicion_base_actual.tolist(),

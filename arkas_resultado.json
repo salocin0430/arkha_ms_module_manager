@@ -5,7 +5,7 @@
     "terrain": "moon",
     "isScientific": false
   },
-  "totalModules": 123,
+  "totalModules": 122,
   "modules": [
     {
       "id": "base_l1_v1",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
+      "id": "access_core_l1_v1",
       "position": [
         0,
         0,
@@ -458,7 +458,7 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
+      "id": "access_core_l1_v1",
       "position": [
         0.0,
         0.0,
@@ -800,7 +800,7 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
+      "id": "access_core_l1_v1",
       "position": [
         14.4,
         0.0,
@@ -1142,7 +1142,7 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
+      "id": "access_core_l1_v1",
       "position": [
         14.4,
         0.0,
@@ -1214,7 +1214,7 @@
       ]
     },
     {
-      "id": "recreaciontri_l1_v1",
+      "id": "recreacion_tri_l1_v1",
       "position": [
         14.4,
         3.1,
@@ -1304,7 +1304,7 @@
       ]
     },
     {
-      "id": "recreaciontri_l1_v1",
+      "id": "recreacion_tri_l1_v1",
       "position": [
         10.8,
         6.2,
@@ -1340,7 +1340,7 @@
       ]
     },
     {
-      "id": "recreaciontri_l1_v1",
+      "id": "recreacion_tri_l1_v1",
       "position": [
         18.0,
         6.2,
@@ -1394,7 +1394,7 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
+      "id": "access_core_l1_v1",
       "position": [
         14.4,
         0.0,
@@ -1826,24 +1826,6 @@
       ]
     },
     {
-      "id": "accesscore_l1_v1",
-      "position": [
-        0.0,
-        0.0,
-        -14.4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
       "id": "transcore_l2_v1",
       "position": [
         0.0,
@@ -2223,9 +2205,9 @@
     }
   ],
   "metadata": {
-    "generatedAt": "2025-10-05T10:21:53.092445Z",
+    "generatedAt": "2025-10-05T10:51:09.876900Z",
     "algorithmVersion": "v3.0.0",
-    "estimatedCost": 430500,
+    "estimatedCost": 427000,
     "currency": "ARKHA",
     "totalArkas": 6,
     "posicionBaseAnterior": [
