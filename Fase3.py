@@ -197,10 +197,10 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 posicion_099 = [centro_piso2[0] + 2*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
                 rotation_099 = constantes["270_grados_derecha"]
             elif arka["direccion_actual"] == "ABAJO":
-                posicion_099 = [centro_piso[0], centro_piso[1], centro_piso[2] - 2*constantes["ancho_modelo"]]
+                posicion_099 = [centro_piso2[0], centro_piso2[1], centro_piso2[2] - 2*constantes["ancho_modelo"]]
                 rotation_099 = constantes["180_grados"]
             elif arka["direccion_actual"] == "DER":
-                posicion_099 =  [centro_piso[0] - 2*constantes["ancho_modelo"], centro_piso[1], centro_piso[2]],
+                posicion_099 = [centro_piso2[0] - 2*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
                 rotation_099 = constantes["90_grados_derecha"]
             
             direccion_actual_099 = {

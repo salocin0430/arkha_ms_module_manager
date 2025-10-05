@@ -36,8 +36,6 @@ from typing import List, Tuple, Dict, Optional
 # =============================================================================
 contador_arkas = 0
 
-# Obtener inventario de módulos desde Fase1
-inventario = Fase1.calcular_modulos_arka(30, 500, True)
 '''
 MODULOS_INFO = {
     "001": "ARKHA_base_L1_V1",      
@@ -343,10 +341,6 @@ pisos_arka = {
     "4":2,
     "0":4,
 }
-
-print(inventario)
-
-
 
 # =============================================================================
 # FUNCIONES PRINCIPALES DEL ALGORITMO
@@ -891,6 +885,8 @@ def calcular_estadisticas(arkas: List[Dict]):
 # =============================================================================
 if __name__ == "__main__":
     print("=== ALGORITMO DE ORDENACIÓN DE ARKAS ===")
+    # Obtener inventario de módulos desde Fase1
+    inventario = Fase1.calcular_modulos_arka(30, 500, False)
     print(f"Inventario: {inventario[0]}")
     print()
     

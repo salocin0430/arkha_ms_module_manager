@@ -497,7 +497,7 @@
       "id": "powercore_l1_v1",
       "position": [
         0.0,
-        15.5,
+        12.4,
         14.4
       ],
       "rotation": [
@@ -821,7 +821,7 @@
       "id": "powercore_l1_v1",
       "position": [
         14.4,
-        15.5,
+        12.4,
         14.4
       ],
       "rotation": [
@@ -1055,7 +1055,7 @@
       "id": "circulacion_l1_v1",
       "position": [
         14.4,
-        9.3,
+        6.2,
         7.2
       ],
       "rotation": [
@@ -1127,7 +1127,7 @@
       "id": "powercore_l1_v1",
       "position": [
         14.4,
-        15.5,
+        9.3,
         0.0
       ],
       "rotation": [
@@ -1702,11 +1702,9 @@
     {
       "id": "circulacion_l1_v1",
       "position": [
-        [
-          7.2,
-          12.4,
-          -14.4
-        ]
+        7.2,
+        6.2,
+        -14.4
       ],
       "rotation": [
         0,
@@ -2135,7 +2133,7 @@
     }
   ],
   "metadata": {
-    "generatedAt": "2025-10-05T09:36:23.393793Z",
+    "generatedAt": "2025-10-05T09:54:01.686946Z",
     "algorithmVersion": "v3.0.0",
     "estimatedCost": 413000,
     "currency": "ARKHA",
