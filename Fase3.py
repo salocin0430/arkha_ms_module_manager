@@ -7,8 +7,8 @@ import math
 constantes = {
     "altura_modulo": 3.1,
     "ancho_modelo": 3.5,
-    "ancho_centro": 3.6,
-    "ancho_circ": 3.6,
+    "ancho_centro": 3.5,
+    "ancho_circ": 3.8,
     "x": "horizontal",
     "y": "vertical",
     "z": "profundidad",
