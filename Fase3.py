@@ -153,13 +153,13 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             
             centro_piso = posicion_base_actual + np.array([0, (piso+1) * constantes["altura_modulo"], 0])
             if arka["matriz"][piso][0] == "009":
-                ancho_especial = constantes["ancho_centro"]
+                ancho_especial = constantes["ancho_centro"]/2 + constantes["ancho_circ"]/2
             else:
                 ancho_especial = constantes["ancho_modelo"]
                 
             piso_cara_A = {
                 "id": id_a_modulo(arka["matriz"][piso][0]),
-                "position": [centro_piso[0], centro_piso[1], centro_piso[2] - ancho_especial/2 - constantes["ancho_modelo"]/2],
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] - ancho_especial],
                 "rotation": constantes["0_grados"],
                 "scale": [1, 1, 1]
             }
@@ -168,13 +168,13 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 modulos_adicionales.append(piso_cara_A)
                 
             if arka["matriz"][piso][1] == "009":
-                ancho_especial = constantes["ancho_centro"]
+                ancho_especial = constantes["ancho_centro"]/2 + constantes["ancho_circ"]/2
             else:
                 ancho_especial = constantes["ancho_modelo"]
             
             piso_cara_B = {
                 "id": id_a_modulo(arka["matriz"][piso][1]),
-                "position": [centro_piso[0] - ancho_especial/2 - constantes["ancho_modelo"]/2, centro_piso[1], centro_piso[2]],
+                "position": [centro_piso[0] - ancho_especial, centro_piso[1], centro_piso[2]],
                 "rotation": constantes["90_grados_derecha"],
                 "scale": [1, 1, 1]
             }
@@ -183,13 +183,13 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 modulos_adicionales.append(piso_cara_B)
             
             if arka["matriz"][piso][2] == "009":
-                ancho_especial = constantes["ancho_centro"]
+                ancho_especial = constantes["ancho_centro"]/2 + constantes["ancho_circ"]/2
             else:
                 ancho_especial = constantes["ancho_modelo"]
             
             piso_cara_C = {
                 "id": id_a_modulo(arka["matriz"][piso][2]),
-                "position": [centro_piso[0], centro_piso[1], centro_piso[2] + ancho_especial/2 + constantes["ancho_modelo"]/2],
+                "position": [centro_piso[0], centro_piso[1], centro_piso[2] + ancho_especial],
                 "rotation": constantes["180_grados"],
                 "scale": [1, 1, 1]
             }
@@ -198,13 +198,13 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
                 modulos_adicionales.append(piso_cara_C)
                 
             if arka["matriz"][piso][3] == "009":
-                ancho_especial = constantes["ancho_centro"]
+                ancho_especial = constantes["ancho_centro"]/2 + constantes["ancho_circ"]/2
             else:
                 ancho_especial = constantes["ancho_modelo"]
             
             piso_cara_D = {
                 "id": id_a_modulo(arka["matriz"][piso][3]),
-                "position": [centro_piso[0] + ancho_especial/2 + constantes["ancho_modelo"]/2, centro_piso[1], centro_piso[2]],
+                "position": [centro_piso[0] + ancho_especial, centro_piso[1], centro_piso[2]],
                 "rotation": constantes["270_grados_derecha"],
                 "scale": [1, 1, 1]
             }
