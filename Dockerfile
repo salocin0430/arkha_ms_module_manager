@@ -24,6 +24,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY main.py .
 COPY Fase1.py .
 COPY Fase2.py .
+COPY Fase3.py .
 
 # Exponer puerto (Coolify lo detectará automáticamente)
 EXPOSE 8001
