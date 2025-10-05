@@ -215,16 +215,16 @@ def añadir_modulos_por_arka(arkas_resultado, P, T, TipoC):
             print(arka["direccion_actual"])
             centro_piso2 = posicion_base_actual + np.array([0, (2) * constantes["altura_modulo"], 0])
             if arka["direccion_actual"] == "ARRIBA":
-                posicion_099 =  [centro_piso2[0], centro_piso2[1], centro_piso2[2] + 1.5*constantes["ancho_circ"]+0.5*constantes["ancho_modelo"]]
+                posicion_099 =  [centro_piso2[0], centro_piso2[1], centro_piso2[2] + 1.5*constantes["ancho_circ"]+0.5*constantes["ancho_centro"]]
                 rotation_099 = constantes["0_grados"]
             elif arka["direccion_actual"] == "IZQ":
-                posicion_099 = [centro_piso2[0] + 1.5*constantes["ancho_circ"]+0.5*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
+                posicion_099 = [centro_piso2[0] + 1.5*constantes["ancho_circ"]+0.5*constantes["ancho_centro"], centro_piso2[1], centro_piso2[2]]
                 rotation_099 = constantes["270_grados_derecha"]
             elif arka["direccion_actual"] == "ABAJO":
-                posicion_099 = [centro_piso2[0], centro_piso2[1], centro_piso2[2] - 1.5*constantes["ancho_circ"]-0.5*constantes["ancho_modelo"]]
+                posicion_099 = [centro_piso2[0], centro_piso2[1], centro_piso2[2] - 1.5*constantes["ancho_circ"]-0.5*constantes["ancho_centro"]]
                 rotation_099 = constantes["180_grados"]
             elif arka["direccion_actual"] == "DER":
-                posicion_099 = [centro_piso2[0] - 1.5*constantes["ancho_circ"]-0.5*constantes["ancho_modelo"], centro_piso2[1], centro_piso2[2]]
+                posicion_099 = [centro_piso2[0] - 1.5*constantes["ancho_circ"]-0.5*constantes["ancho_centro"], centro_piso2[1], centro_piso2[2]]
                 rotation_099 = constantes["90_grados_derecha"]
             
             direccion_actual_099 = {
